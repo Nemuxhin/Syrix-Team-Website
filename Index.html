@@ -1,0 +1,467 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Ultimate Team Portal | Inspired by Esports</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles and Inter font setup */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0d0d0d; /* Extremely Dark Background */
+            color: #f3f4f6; /* Near-white text */
+            scroll-behavior: smooth; /* Added for smoother navigation */
+        }
+
+        .accent-color {
+            color: #ff3333; /* Bright Red Accent */
+        }
+
+        .accent-bg {
+            background-color: #ff3333;
+        }
+
+        .hero-section {
+            /* Updated placeholder image to use Red accent and Syrix reference */
+            background-image: linear-gradient(rgba(13, 13, 13, 0.85), rgba(13, 13, 13, 0.85)), url('https://placehold.co/1920x800/222/ff3333?text=SYRIX+CHALLENGE');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .content-card {
+            background-color: #1a1a1a;
+            border: 1px solid #2d3748;
+            transition: all 0.3s;
+        }
+
+            .content-card:hover {
+                /* Updated box shadow to Red */
+                box-shadow: 0 0 15px rgba(255, 51, 51, 0.2);
+                border-color: #ff3333;
+            }
+
+        .scroll-container {
+            max-height: 500px;
+            overflow-y: auto;
+        }
+            /* Custom scrollbar for dark theme */
+            .scroll-container::-webkit-scrollbar {
+                width: 8px;
+            }
+
+            .scroll-container::-webkit-scrollbar-track {
+                background: #1a1a1a;
+            }
+
+            .scroll-container::-webkit-scrollbar-thumb {
+                /* Updated scrollbar thumb color to Red */
+                background: #ff3333;
+                border-radius: 10px;
+            }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <!-- Header & Navigation -->
+    <header class="bg-black shadow-lg p-4 sticky top-0 z-20 border-b border-gray-800">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <h1 class="text-3xl font-extrabold accent-color tracking-wider uppercase">SYRIX <span class="text-xs text-gray-400 align-top">TEAM</span></h1>
+
+            <nav class="hidden lg:flex space-x-8 text-sm font-semibold">
+                <a href="#roster" class="text-gray-300 hover:accent-color transition duration-200">ROSTER</a>
+                <a href="#news" class="text-gray-300 hover:accent-color transition duration-200">NEWS FEED</a>
+                <a href="#shop" class="text-gray-300 hover:accent-color transition duration-200">SHOP</a>
+                <a href="#sponsors" class="text-gray-300 hover:accent-color transition duration-200">PARTNERS</a>
+            </nav>
+
+            <div id="auth-status" class="text-right">
+                <!-- User ID will be displayed here -->
+                <p class="text-xs text-gray-500">Auth Status</p>
+                <p class="text-xs text-gray-600">Connecting...</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section min-h-[60vh] flex items-center justify-center text-center p-8">
+        <div class="max-w-4xl">
+            <h2 class="text-5xl md:text-7xl font-extrabold text-white uppercase tracking-tighter leading-none mb-4">
+                We Are <span class="accent-color">SYRIX</span>
+            </h2>
+            <p class="text-xl text-gray-300 font-light mb-8">
+                Forged in competition, driven by excellence. Follow our journey, check the latest updates, and join the mission.
+            </p>
+            <a href="#roster" class="inline-block px-8 py-3 text-lg font-bold text-black accent-bg rounded-lg shadow-xl hover:bg-red-400 transition duration-300 uppercase">
+                Meet the Team
+            </a>
+        </div>
+    </section>
+
+    <!-- Main Content Area -->
+    <main class="flex-grow max-w-7xl mx-auto w-full p-4 md:p-8 space-y-16">
+
+        <!-- Team Roster Section -->
+        <section id="roster" class="pt-8">
+            <h3 class="text-4xl font-bold text-center mb-12 uppercase">THE <span class="accent-color">ROSTER</span></h3>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Player Card 1 -->
+                <div class="content-card p-6 rounded-xl text-center">
+                    <div class="w-24 h-24 mx-auto mb-4 bg-gray-700 rounded-full flex items-center justify-center text-4xl accent-color font-extrabold">V</div>
+                    <h4 class="text-xl font-bold accent-color">Viper</h4>
+                    <p class="text-sm text-gray-400">Captain / IGL</p>
+                    <p class="text-xs text-gray-500 mt-2">Specializing in strategic late-game calls.</p>
+                </div>
+                <!-- Player Card 2 -->
+                <div class="content-card p-6 rounded-xl text-center">
+                    <div class="w-24 h-24 mx-auto mb-4 bg-gray-700 rounded-full flex items-center justify-center text-4xl accent-color font-extrabold">B</div>
+                    <h4 class="text-xl font-bold accent-color">Blitz</h4>
+                    <p class="text-sm text-gray-400">Entry Fragger</p>
+                    <p class="text-xs text-gray-500 mt-2">Known for aggressive opening maneuvers.</p>
+                </div>
+                <!-- Player Card 3 -->
+                <div class="content-card p-6 rounded-xl text-center">
+                    <div class="w-24 h-24 mx-auto mb-4 bg-gray-700 rounded-full flex items-center justify-center text-4xl accent-color font-extrabold">S</div>
+                    <h4 class="text-xl font-bold accent-color">Spectre</h4>
+                    <p class="text-sm text-gray-400">Support / Flex</p>
+                    <p class="text-xs text-gray-500 mt-2">The backbone of utility and coverage.</p>
+                </div>
+                <!-- Player Card 4 -->
+                <div class="content-card p-6 rounded-xl text-center">
+                    <div class="w-24 h-24 mx-auto mb-4 bg-gray-700 rounded-full flex items-center justify-center text-4xl accent-color font-extrabold">Z</div>
+                    <h4 class="text-xl font-bold accent-color">Zero</h4>
+                    <p class="text-sm text-gray-400">Awper / Sniper</p>
+                    <p class="text-xs text-gray-500 mt-2">The clutch master with pinpoint accuracy.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Latest News & Updates (Real-Time Feed) -->
+        <section id="news" class="pt-8 bg-[#131313] p-6 rounded-2xl shadow-inner border border-gray-800">
+            <h3 class="text-4xl font-bold mb-8 uppercase"><span class="accent-color">LATEST</span> NEWS & UPDATES</h3>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+                <!-- Left Column: New Update Form (Internal Use) -->
+                <div class="lg:col-span-1 content-card p-6 rounded-xl border-red-800">
+                    <h4 class="text-xl font-semibold mb-4 text-gray-100 border-b border-gray-700 pb-2">Internal Team Post</h4>
+
+                    <form id="update-form">
+                        <input type="text" id="update-title" required class="w-full p-3 mb-3 border border-gray-700 bg-gray-800 text-white rounded-lg focus:ring-red-500 focus:border-red-500" placeholder="Title (e.g., Scrims Report)">
+                        <textarea id="update-content" rows="4" required class="w-full p-3 mb-4 border border-gray-700 bg-gray-800 text-white rounded-lg focus:ring-red-500 focus:border-red-500" placeholder="Details (visible to all users)"></textarea>
+                        <button type="submit" id="submit-button" class="w-full accent-bg text-black p-3 rounded-lg font-bold hover:bg-red-400 transition duration-300 shadow-md">
+                            Publish Team Update
+                        </button>
+                    </form>
+                    <div id="message-box" class="mt-4 p-3 text-sm rounded-lg" style="display: none;"></div>
+                </div>
+
+                <!-- Right Column: Real-Time Team Feed -->
+                <div class="lg:col-span-2 space-y-4 scroll-container bg-gray-900 p-4 rounded-xl">
+                    <div id="updates-list">
+                        <!-- Updates will be loaded here -->
+                        <div class="text-center p-8 text-gray-500" id="loading-indicator">
+                            Loading real-time news feed...
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Partners / Sponsors Section -->
+        <section id="sponsors" class="pt-8 text-center">
+            <h3 class="text-3xl font-bold mb-10 uppercase text-gray-300">Our <span class="accent-color">Partners</span></h3>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 items-center max-w-5xl mx-auto">
+                <div class="h-16 flex items-center justify-center bg-gray-800 rounded-lg p-3 opacity-70 hover:opacity-100 transition duration-300">
+                    <span class="text-xl font-bold text-gray-400">Quantum Gear</span>
+                </div>
+                <div class="h-16 flex items-center justify-center bg-gray-800 rounded-lg p-3 opacity-70 hover:opacity-100 transition duration-300">
+                    <span class="text-xl font-bold text-gray-400">Nebula Drink</span>
+                </div>
+                <div class="h-16 flex items-center justify-center bg-gray-800 rounded-lg p-3 opacity-70 hover:opacity-100 transition duration-300">
+                    <span class="text-xl font-bold text-gray-400">Fusion Fiber</span>
+                </div>
+                <div class="h-16 flex items-center justify-center bg-gray-800 rounded-lg p-3 opacity-70 hover:opacity-100 transition duration-300">
+                    <span class="text-xl font-bold text-gray-400">Apex Hosting</span>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-black p-10 mt-16 border-t border-gray-900">
+        <div class="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8">
+            <div>
+                <h5 class="text-lg font-bold accent-color mb-3">SYRIX</h5>
+                <p class="text-sm text-gray-500">
+                    Team SYRIX is an elite organization dedicated to victory and professional digital competition.
+                </p>
+            </div>
+            <div>
+                <h5 class="text-lg font-bold text-gray-300 mb-3">ABOUT</h5>
+                <ul class="space-y-2 text-sm text-gray-500">
+                    <li><a href="#" class="hover:accent-color">History</a></li>
+                    <li><a href="#" class="hover:accent-color">Careers</a></li>
+                    <li><a href="#" class="hover:accent-color">Contact Us</a></li>
+                </ul>
+            </div>
+            <div>
+                <h5 class="text-lg font-bold text-gray-300 mb-3">MEDIA</h5>
+                <ul class="space-y-2 text-sm text-gray-500">
+                    <li><a href="#" class="hover:accent-color">Videos</a></li>
+                    <li><a href="#" class="hover:accent-color">Press Kit</a></li>
+                    <li><a href="#" class="hover:accent-color">Wallpapers</a></li>
+                </ul>
+            </div>
+            <div>
+                <h5 class="text-lg font-bold text-gray-300 mb-3">SUPPORT</h5>
+                <ul class="space-y-2 text-sm text-gray-500">
+                    <li><a href="#" class="hover:accent-color">Shop FAQ</a></li>
+                    <li><a href="#" class="hover:accent-color">Privacy Policy</a></li>
+                    <li><a href="#" class="hover:accent-color">Terms of Use</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="mt-10 text-center text-sm text-gray-700 border-t border-gray-800 pt-6">
+            &copy; 2025 Team SYRIX. Inspired by leading esports portals.
+        </div>
+    </footer>
+
+    <!-- Firebase SDK Imports and Logic -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, addDoc, onSnapshot, collection, query, orderBy, serverTimestamp, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Enable debug logging for Firebase
+        setLogLevel('Debug');
+
+        // --- Global Variables and Setup ---
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
+
+        let app, db, auth;
+        let userId = null;
+        let isAuthReady = false;
+        let isListening = false; // New flag to prevent duplicate listeners
+
+        const authStatusElement = document.getElementById('auth-status');
+        const updateForm = document.getElementById('update-form');
+        const updatesList = document.getElementById('updates-list');
+        const submitButton = document.getElementById('submit-button');
+        const messageBox = document.getElementById('message-box');
+
+        // --- Utility Functions ---
+
+        /**
+         * Shows a temporary message in a stylized box.
+         * @param {string} message - The message content.
+         * @param {string} type - 'success' or 'error'.
+         */
+        function showMessage(message, type) {
+            messageBox.textContent = message;
+            messageBox.style.display = 'block';
+
+            // Adjust message box styling for dark theme
+            if (type === 'error') {
+                messageBox.className = 'mt-4 p-3 text-sm rounded-lg bg-red-800 text-red-300 border border-red-700';
+                console.error("Application Error:", message);
+            } else {
+                // SUCCESS message uses green, which is a universal sign of success
+                messageBox.className = 'mt-4 p-3 text-sm rounded-lg bg-green-800 text-green-300 border border-green-700';
+            }
+
+            setTimeout(() => {
+                messageBox.style.display = 'none';
+            }, 5000);
+        }
+
+        // --- Firebase Initialization and Authentication ---
+
+        /**
+         * Retries the fetch operation with exponential backoff.
+         * @param {function} fn - The function to retry.
+         * @param {number} maxRetries - Maximum number of retries.
+         * @returns {Promise<any>}
+         */
+        async function withExponentialBackoff(fn, maxRetries = 5) {
+            for (let i = 0; i < maxRetries; i++) {
+                try {
+                    return await fn();
+                } catch (error) {
+                    if (i === maxRetries - 1) {
+                        throw error;
+                    }
+                    const delay = Math.pow(2, i) * 1000 + Math.random() * 1000;
+                    await new Promise(resolve => setTimeout(resolve, delay));
+                }
+            }
+        }
+
+
+        async function initializeFirebase() {
+            try {
+                app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                auth = getAuth(app);
+
+                // 1. Handle primary sign-in first (Custom Token or Anonymous)
+                let user;
+                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                    const credential = await withExponentialBackoff(() => signInWithCustomToken(auth, __initial_auth_token));
+                    user = credential.user;
+                } else {
+                    const credential = await withExponentialBackoff(() => signInAnonymously(auth));
+                    user = credential.user;
+                }
+
+                // 2. Once sign-in is complete, set auth state and start listening
+                if (user) {
+                    userId = user.uid;
+                    isAuthReady = true;
+                    authStatusElement.innerHTML = `
+                        <p class="text-sm font-medium text-gray-300">Status: Authenticated</p>
+                        <p class="text-xs accent-color font-mono break-all">ID: ${userId}</p>
+                    `;
+                    listenForUpdates();
+                } else {
+                    // This case should theoretically not be hit if sign-in methods work,
+                    // but it's a safety net.
+                    isAuthReady = true;
+                    authStatusElement.innerHTML = `<p class="text-sm text-red-500">Auth Failed.</p>`;
+                }
+
+                // 3. Keep the onAuthStateChanged for real-time user status changes (optional, but good practice)
+                onAuthStateChanged(auth, (user) => {
+                    if (user && user.uid !== userId) {
+                        // Update UI if the user changes context mid-session
+                        userId = user.uid;
+                        authStatusElement.innerHTML = `
+                            <p class="text-sm font-medium text-gray-300">Status: Authenticated</p>
+                            <p class="text-xs accent-color font-mono break-all">ID: ${userId}</p>
+                        `;
+                    }
+                });
+
+            } catch (error) {
+                console.error("Firebase initialization failed:", error);
+                authStatusElement.innerHTML = `<p class="text-sm text-red-500">Auth Error. See console.</p>`;
+                showMessage(`Failed to initialize application. Check console for details.`, 'error');
+            }
+        }
+
+        // --- Firestore Data Operations ---
+
+        const getUpdatesCollectionRef = () => {
+            // Public collection path: /artifacts/{appId}/public/data/team_updates
+            const collectionPath = `/artifacts/${appId}/public/data/team_updates`;
+            return collection(db, collectionPath);
+        };
+
+        async function postUpdate(event) {
+            event.preventDefault();
+
+            if (!isAuthReady || !db) {
+                showMessage('Authentication not ready. Please wait a moment.', 'error');
+                return;
+            }
+
+            const title = document.getElementById('update-title').value.trim();
+            const content = document.getElementById('update-content').value.trim();
+
+            if (!title || !content) {
+                showMessage('Please enter both a title and details for the update.', 'error');
+                return;
+            }
+
+            submitButton.disabled = true;
+            submitButton.textContent = 'Publishing...';
+
+            try {
+                const newUpdate = {
+                    title: title,
+                    content: content,
+                    timestamp: serverTimestamp(),
+                    authorId: userId,
+                };
+
+                await withExponentialBackoff(() => addDoc(getUpdatesCollectionRef(), newUpdate));
+
+                showMessage('Update published successfully!', 'success');
+                updateForm.reset();
+            } catch (error) {
+                showMessage(`Failed to publish update. Error: ${error.message}`, 'error');
+                console.error("Error posting update:", error);
+            } finally {
+                submitButton.disabled = false;
+                submitButton.textContent = 'Publish Team Update';
+            }
+        }
+
+        function listenForUpdates() {
+            // FIX: Ensure listener is only attached once upon first successful auth.
+            if (!isAuthReady || !db || isListening) return;
+
+            const q = query(getUpdatesCollectionRef(), orderBy('timestamp', 'desc'));
+
+            // onSnapshot provides real-time updates
+            isListening = true;
+            onSnapshot(q, (snapshot) => {
+                updatesList.innerHTML = '';
+                if (snapshot.empty) {
+                    updatesList.innerHTML = '<p class="text-center p-6 text-gray-500">No official news yet. Check back soon!</p>';
+                    return;
+                }
+
+                snapshot.forEach((doc) => {
+                    const data = doc.data();
+                    const date = data.timestamp ? new Date(data.timestamp.toDate()).toLocaleString() : 'Just now';
+
+                    const isMyPost = data.authorId === userId;
+                    // Dark theme styling for cards
+                    const cardClasses = isMyPost
+                        ? 'border-l-4 border-yellow-500 bg-[#1e1e1e] shadow-md'
+                        // Updated public post border and title color to use Red
+                        : 'border-l-4 border-red-500 bg-[#181818] shadow-md';
+                    const authorTag = isMyPost ? '<span class="text-xs font-semibold text-yellow-400"> (You)</span>' : '';
+                    const titleColor = isMyPost ? 'text-yellow-200' : 'text-red-200'; // Updated public post title color
+
+                    const updateCard = `
+                        <div class="p-4 rounded-lg ${cardClasses}">
+                            <div class="flex justify-between items-start mb-2">
+                                <h4 class="text-lg font-bold ${titleColor}">${data.title}</h4>
+                                <span class="text-xs text-gray-500">${date}</span>
+                            </div>
+                            <p class="text-gray-300 mb-3">${data.content}</p>
+                            <p class="text-xs text-gray-500">
+                                Posted by:
+                                <span class="font-mono text-gray-400">${data.authorId.substring(0, 8)}...</span>
+                                ${authorTag}
+                            </p>
+                        </div>
+                    `;
+                    updatesList.innerHTML += updateCard;
+                });
+            }, (error) => {
+                console.error("Error fetching real-time updates: ", error);
+                // Clear the list and show a specific error message
+                updatesList.innerHTML = `<div class="text-center p-6 text-red-500 bg-red-900/30 rounded-lg">
+                    <p class="font-bold">Permissions Error Detected!</p>
+                    <p class="text-sm">The database query failed. The user ID may not have been fully established before the query ran.</p>
+                    <p class="text-xs mt-2 text-red-300">Error: ${error.message}</p>
+                </div>`;
+            });
+        }
+
+        // --- Event Listeners and Startup ---
+        updateForm.addEventListener('submit', postUpdate);
+        window.addEventListener('load', initializeFirebase);
+    </script>
+</body>
+</html>
