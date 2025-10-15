@@ -2,10 +2,7 @@
   "rewrites": [
     {
       "source": "/",
-      "destination": "/pro_team_portal.html"
+      "destination": "/Index.html"
     }
   ]
-}
-{
-
 }
