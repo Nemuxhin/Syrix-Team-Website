@@ -61,6 +61,15 @@
             background-size: cover;
             background-position: center;
             min-height: 70vh;
+            /* Added for Parallax effect */
+            background-attachment: fixed;
+        }
+
+        /* Fallback for devices that don't support background-attachment: fixed (iOS/Safari on mobile) */
+        @media only screen and (max-width: 768px) {
+            .hero-section {
+                background-attachment: scroll;
+            }
         }
 
         /* Animation for the Live indicator */
@@ -122,7 +131,7 @@
 
 
     <!-- Hero Section -->
-    <section id="home" class="hero-section flex items-center justify-center text-center p-6 mb-16">
+    <section id="home" class="hero-section flex items-center justify-center text-center p-6">
         <div class="bg-black/80 p-8 md:p-12 rounded-xl shadow-2xl max-w-4xl border border-red-700/50">
             <!-- New: Live Status Banner -->
             <div class="flex items-center justify-center mb-6 py-2 px-4 rounded-full bg-red-900/50 border border-red-700 text-sm font-semibold">
@@ -144,7 +153,27 @@
         </div>
     </section>
 
-    <!-- About / Mission Section (New Addition) -->
+    <!-- Achievements/Stats Section (NEW) -->
+    <section id="achievements" class="bg-gray-900 py-12 mb-16 shadow-inner">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-3 gap-8 text-center">
+                <div class="border-r border-red-900/50 pr-4">
+                    <p class="text-5xl font-extrabold accent-text mb-1">5</p>
+                    <p class="text-sm uppercase tracking-wider text-gray-400">Major Titles</p>
+                </div>
+                <div class="border-r border-red-900/50 pr-4">
+                    <p class="text-5xl font-extrabold accent-text mb-1">92%</p>
+                    <p class="text-sm uppercase tracking-wider text-gray-400">Win Rate (2025)</p>
+                </div>
+                <div>
+                    <p class="text-5xl font-extrabold accent-text mb-1">10k</p>
+                    <p class="text-sm uppercase tracking-wider text-gray-400">Peak Viewers</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About / Mission Section -->
     <section id="about" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div class="order-2 lg:order-1">
@@ -174,64 +203,17 @@
         </div>
     </section>
 
-    <!-- Roster Section -->
+    <!-- Roster Section - Now Dynamically Loaded from JS -->
     <section id="roster" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div class="text-center mb-12">
             <h3 class="text-3xl md:text-4xl font-bold mb-2">The <span class="accent-text">Active Roster</span> (5)</h3>
             <p class="text-gray-400">The primary line-up for competition.</p>
         </div>
 
-        <!-- Main Player Grid (5 Players) -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 mb-16">
-            <!-- Player Card 1 (Viper) -->
-            <div class="bg-gray-800 rounded-xl overflow-hidden shadow-2xl border-b-4 border-red-700 transform transition duration-500 hover:scale-[1.03]">
-                <img src="https://placehold.co/400x300/333/fff?text=VIPER" alt="Player Viper" class="w-full h-48 object-cover">
-                <div class="p-6 text-center">
-                    <h4 class="text-2xl font-extrabold accent-text mb-1">Viper</h4>
-                    <p class="text-sm font-semibold text-gray-300">In-Game Leader (IGL)</p>
-                    <p class="text-xs text-gray-500 mt-3">The mastermind behind every strategy and decisive moment.</p>
-                </div>
-            </div>
-
-            <!-- Player Card 2 (Blitz) -->
-            <div class="bg-gray-800 rounded-xl overflow-hidden shadow-2xl border-b-4 border-red-700 transform transition duration-500 hover:scale-[1.03]">
-                <img src="https://placehold.co/400x300/333/fff?text=BLITZ" alt="Player Blitz" class="w-full h-48 object-cover">
-                <div class="p-6 text-center">
-                    <h4 class="text-2xl font-extrabold accent-text mb-1">Blitz</h4>
-                    <p class="text-sm font-semibold text-gray-300">Entry Fragger</p>
-                    <p class="text-xs text-gray-500 mt-3">Unmatched aggression and precision on the front lines.</p>
-                </div>
-            </div>
-
-            <!-- Player Card 3 (Spectre) -->
-            <div class="bg-gray-800 rounded-xl overflow-hidden shadow-2xl border-b-4 border-red-700 transform transition duration-500 hover:scale-[1.03]">
-                <img src="https://placehold.co/400x300/333/fff?text=SPECTRE" alt="Player Spectre" class="w-full h-48 object-cover">
-                <div class="p-6 text-center">
-                    <h4 class="text-2xl font-extrabold accent-text mb-1">Spectre</h4>
-                    <p class="text-sm font-semibold text-gray-300">Support / Flex</p>
-                    <p class="text-xs text-gray-500 mt-3">The adaptive player, ensuring team utility and balance.</p>
-                </div>
-            </div>
-
-            <!-- Player Card 4 (Zero) -->
-            <div class="bg-gray-800 rounded-xl overflow-hidden shadow-2xl border-b-4 border-red-700 transform transition duration-500 hover:scale-[1.03]">
-                <img src="https://placehold.co/400x300/333/fff?text=ZERO" alt="Player Zero" class="w-full h-48 object-cover">
-                <div class="p-6 text-center">
-                    <h4 class="text-2xl font-extrabold accent-text mb-1">Zero</h4>
-                    <p class="text-sm font-semibold text-gray-300">Sniper / Main Carry</p>
-                    <p class="text-xs text-gray-500 mt-3">Deadly accuracy and the primary source of damage output.</p>
-                </div>
-            </div>
-
-            <!-- Player Card 5 (New Slot) -->
-            <div class="bg-gray-800 rounded-xl overflow-hidden shadow-2xl border-b-4 border-red-700 transform transition duration-500 hover:scale-[1.03]">
-                <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.pinimg.com%2F736x%2Fb9%2Fdb%2Fb3%2Fb9dbb3de029994cc135d13935290d000.jpg&f=1&nofb=1&ipt=107844a6e7198fc0c62c7646539b080c2e56f10f146e3e871b32962893a082ff" alt="Player Pulsar" class="w-full h-48 object-cover">
-                <div class="p-6 text-center">
-                    <h4 class="text-2xl font-extrabold accent-text mb-1">Nemuxhin</h4>
-                    <p class="text-sm font-semibold text-gray-300">Flex</p>
-                    <p class="text-xs text-gray-500 mt-3">The silent operative, controlling map space and vision.</p>
-                </div>
-            </div>
+        <!-- Container for Active Players -->
+        <div id="active-roster-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 mb-16">
+            <!-- Roster cards will be injected here by JavaScript -->
+            <p class="text-center text-gray-500 lg:col-span-5">Loading roster...</p>
         </div>
 
         <!-- Substitutes Section -->
@@ -240,27 +222,10 @@
             <p class="text-gray-400">The versatile players ready to step in when needed.</p>
         </div>
 
-        <!-- Substitute Player Grid (2 Slots, centered on desktop) -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-8 max-w-4xl mx-auto mb-16">
-            <!-- Sub Card 1 (Jinx) -->
-            <div class="bg-gray-800 rounded-xl overflow-hidden shadow-2xl border-b-4 border-red-700 opacity-80 transform transition duration-500 hover:opacity-100 hover:scale-[1.03]">
-                <img src="https://placehold.co/400x300/333/999?text=JINX" alt="Sub Player Jinx" class="w-full h-48 object-cover">
-                <div class="p-6 text-center">
-                    <h4 class="text-2xl font-extrabold accent-text mb-1">Jinx</h4>
-                    <p class="text-sm font-semibold text-gray-300">Substitute / Duelist</p>
-                    <p class="text-xs text-gray-500 mt-3">High skill ceiling and deep map knowledge.</p>
-                </div>
-            </div>
-
-            <!-- Sub Card 2 (Ghost) -->
-            <div class="bg-gray-800 rounded-xl overflow-hidden shadow-2xl border-b-4 border-red-700 opacity-80 transform transition duration-500 hover:opacity-100 hover:scale-[1.03]">
-                <img src="https://placehold.co/400x300/333/999?text=GHOST" alt="Sub Player Ghost" class="w-full h-48 object-cover">
-                <div class="p-6 text-center">
-                    <h4 class="text-2xl font-extrabold accent-text mb-1">Ghost</h4>
-                    <p class="text-sm font-semibold text-gray-300">Substitute / Support</p>
-                    <p class="text-xs text-gray-500 mt-3">Excels at utility usage and strategic vision.</p>
-                </div>
-            </div>
+        <!-- Container for Substitutes -->
+        <div id="sub-roster-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-8 max-w-4xl mx-auto mb-16">
+            <!-- Roster cards will be injected here by JavaScript -->
+            <p class="text-center text-gray-500 lg:col-span-2">Loading substitutes...</p>
         </div>
 
         <!-- Management Section -->
@@ -269,28 +234,10 @@
             <p class="text-gray-400">The staff guiding our strategy and operations.</p>
         </div>
 
-        <!-- Management Grid (2 Slots, centered on desktop) -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            <!-- Staff Card 1 (Coach) -->
-            <div class="bg-gray-800 rounded-xl overflow-hidden shadow-2xl border-b-4 border-gray-500 transform transition duration-500 hover:scale-[1.03]">
-                <img src="https://placehold.co/400x300/444/ddd?text=COACH+ZETA" alt="Coach Zeta" class="w-full h-48 object-cover">
-                <div class="p-6 text-center">
-                    <h4 class="text-2xl font-extrabold text-white mb-1">Zeta</h4>
-                    <p class="text-sm font-semibold text-gray-300">Head Coach</p>
-                    <p class="text-xs text-gray-500 mt-3">Former pro player and tactical genius.</p>
-                </div>
-            </div>
-
-            <!-- Staff Card 2 (Manager) -->
-            <div class="bg-gray-800 rounded-xl overflow-hidden shadow-2xl border-b-4 border-gray-500 transform transition duration-500 hover:scale-[1.03]">
-                <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.pinimg.com%2F736x%2Fb9%2Fdb%2Fb3%2Fb9dbb3de029994cc135d13935290d000.jpg&f=1&nofb=1&ipt=107844a6e7198fc0c62c7646539b080c2e56f10f146e3e871b32962893a082ff" alt="Manager Nova" class="w-full h-48 object-cover">
-                <div class="p-6 text-center">
-                    <h4 class="text-2xl font-extrabold text-white mb-1">Nemuxhin</h4>
-                    <p class="text-sm font-semibold text-gray-300">Team Manager</p>
-                    <p class="text-xs text-gray-500 mt-3">Handles logistics, scheduling, and media relations.</p>
-                    </p>
-                </div>
-            </div>
+        <!-- Container for Management -->
+        <div id="management-roster-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            <!-- Roster cards will be injected here by JavaScript -->
+            <p class="text-center text-gray-500 lg:col-span-2">Loading management...</p>
         </div>
     </section>
 
@@ -593,9 +540,62 @@
         </div>
     </footer>
 
-    <!-- Mobile Menu Toggle Script -->
+    <!-- Mobile Menu Toggle Script & Dynamic Roster Script -->
     <script>
+        // --- 1. Team Data Structure (EDIT THIS TO UPDATE ROSTER) ---
+        const teamData = {
+            active: [
+                { name: "Viper", discordTag: "viper_0001", role: "In-Game Leader (IGL)", desc: "The mastermind behind every strategy and decisive moment.", pfpUrl: "https://placehold.co/400x300/333/fff?text=VIPER" },
+                { name: "Blitz", discordTag: "blitz_syrix", role: "Entry Fragger", desc: "Unmatched aggression and precision on the front lines.", pfpUrl: "https://placehold.co/400x300/333/fff?text=BLITZ" },
+                { name: "Spectre", discordTag: "spectre_gg", role: "Support / Flex", desc: "The adaptive player, ensuring team utility and balance.", pfpUrl: "https://placehold.co/400x300/333/fff?text=SPECTRE" },
+                { name: "Zero", discordTag: "zero_one", role: "Sniper / Main Carry", desc: "Deadly accuracy and the primary source of damage output.", pfpUrl: "https://placehold.co/400x300/333/fff?text=ZERO" },
+                { name: "Nemuxhin", discordTag: "Nemuxhin", role: "Flex Player", desc: "Versatile player capable of adapting to any team composition.", pfpUrl: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.pinimg.com%2F736x%2Fb9%2Fdb%2Fb3%2Fb9dbb3de029994cc135d13935290d000.jpg&f=1&nofb=1&ipt=107844a6e7198fc0c62c7646539b080c2e56f10f146e3e871b32962893a082ff" },
+            ],
+            substitutes: [
+                { name: "Jinx", discordTag: "jinx_sub", role: "Substitute / Duelist", desc: "High skill ceiling and deep map knowledge.", pfpUrl: "https://placehold.co/400x300/333/999?text=JINX" },
+                { name: "Ghost", discordTag: "ghost_syrix", role: "Substitute / Support", desc: "Excels at utility usage and strategic vision.", pfpUrl: "https://placehold.co/400x300/333/999?text=GHOST" },
+            ],
+            management: [
+                { name: "Zeta", discordTag: "zeta_coach", role: "Head Coach", desc: "Former pro player and tactical genius.", pfpUrl: "https://placehold.co/400x300/444/ddd?text=COACH+ZETA" },
+                { name: "Nemuxhin", discordTag: "Nemuxhin", role: "Team Manager", desc: "Handles logistics, scheduling, and media relations.", pfpUrl: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.pinimg.com%2F736x%2Fb9%2Fdb%2Fb3%2Fb9dbb3de029994cc135d13935290d000.jpg&f=1&nofb=1&ipt=107844a6e7198fc0c62c7646539b080c2e56f10f146e3e871b32962893a082ff" },
+            ]
+        };
+
+        // --- 2. Roster Rendering Function ---
+        const createPlayerCard = (player, isManagement) => {
+            const baseClasses = "bg-gray-800 rounded-xl overflow-hidden shadow-2xl transform transition duration-500 hover:scale-[1.03]";
+            const borderClass = isManagement ? "border-b-4 border-gray-500" : "border-b-4 border-red-700";
+            const textColorClass = isManagement ? "text-white" : "accent-text";
+
+            return `
+                    <div class="${baseClasses} ${borderClass}">
+                        <img src="${player.pfpUrl}" alt="${player.name}'s Profile Picture" class="w-full h-48 object-cover rounded-t-xl" onerror="this.onerror=null;this.src='https://placehold.co/400x300/333/fff?text=PFP';">
+                        <div class="p-6 text-center">
+                            <h4 class="text-2xl font-extrabold ${textColorClass} mb-1">${player.name}</h4>
+                            <p class="text-sm font-semibold text-gray-400 mb-1">${player.role}</p>
+                            <img src="https://placehold.co/100x20/444/ff3333?text=STATUS+IMG" alt="Status Placeholder" class="mx-auto mt-3 rounded-full" />
+                        </div>
+                    </div>
+                `;
+        };
+
+        const renderRoster = (data, containerId, isManagement = false) => {
+            const container = document.getElementById(containerId);
+            container.innerHTML = ''; // Clear loading text
+
+            if (data.length === 0) {
+                container.innerHTML = `<p class="text-center text-gray-500 lg:col-span-5">No ${containerId.replace('-container', '').replace('-', ' ')} listed.</p>`;
+                return;
+            }
+
+            data.forEach(player => {
+                container.innerHTML += createPlayerCard(player, isManagement);
+            });
+        };
+
+        // --- 3. Initialization ---
         document.addEventListener('DOMContentLoaded', () => {
+            // Mobile Menu Toggle Logic
             const menuToggle = document.getElementById('menu-toggle');
             const mobileMenu = document.getElementById('mobile-menu');
             const menuIcon = document.getElementById('menu-icon');
@@ -621,6 +621,11 @@
                     }
                 });
             });
+
+            // Render the Roster on page load
+            renderRoster(teamData.active, 'active-roster-container');
+            renderRoster(teamData.substitutes, 'sub-roster-container');
+            renderRoster(teamData.management, 'management-roster-container', true);
         });
     </script>
 </body>
