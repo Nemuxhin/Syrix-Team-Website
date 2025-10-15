@@ -74,15 +74,33 @@
                 <h1 class="text-xl font-extrabold uppercase tracking-widest">Syrix</h1>
             </a>
 
+            <!-- Mobile Menu Button -->
+            <button id="menu-toggle" class="md:hidden text-2xl z-50 p-2 focus:outline-none">
+                <span id="menu-icon">&#9776;</span>
+            </button>
+
             <!-- Desktop Navigation -->
             <div class="hidden md:flex space-x-8 text-sm font-semibold">
                 <a href="#roster" class="hover:accent-text transition duration-300">ROSTER</a>
+                <a href="#schedule" class="hover:accent-text transition duration-300">SCHEDULE</a>
                 <a href="#news" class="hover:accent-text transition duration-300">NEWS FEED</a>
                 <a href="#partners" class="hover:accent-text transition duration-300">PARTNERS</a>
                 <a href="#" class="px-4 py-2 rounded-full accent-bg hover:bg-red-700 transition duration-300 shadow-lg">JOIN</a>
             </div>
         </nav>
     </header>
+
+    <!-- Mobile Menu Drawer (Hidden by default) -->
+    <div id="mobile-menu" class="fixed inset-0 bg-black/95 z-40 transform -translate-x-full transition-transform duration-300 md:hidden pt-24">
+        <div class="flex flex-col items-center space-y-6 text-xl font-bold">
+            <a href="#roster" class="hover:accent-text transition duration-300 menu-item text-white">ROSTER</a>
+            <a href="#schedule" class="hover:accent-text transition duration-300 menu-item text-white">SCHEDULE</a>
+            <a href="#news" class="hover:accent-text transition duration-300 menu-item text-white">NEWS FEED</a>
+            <a href="#partners" class="hover:accent-text transition duration-300 menu-item text-white">PARTNERS</a>
+            <a href="#" class="px-6 py-3 w-40 text-center rounded-full accent-bg hover:bg-red-700 transition duration-300 shadow-lg text-white mt-4">JOIN</a>
+        </div>
+    </div>
+
 
     <!-- Hero Section -->
     <section id="home" class="hero-section flex items-center justify-center text-center p-6 mb-16">
@@ -146,6 +164,55 @@
                     <h4 class="text-2xl font-extrabold accent-text mb-1">Zero</h4>
                     <p class="text-sm font-semibold text-gray-300">Sniper / Main Carry</p>
                     <p class="text-xs text-gray-500 mt-3">Deadly accuracy and the primary source of damage output.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Match Schedule Section (New Addition) -->
+    <section id="schedule" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div class="text-center mb-12">
+            <h3 class="text-3xl md:text-4xl font-bold mb-2">Upcoming <span class="accent-text">Schedule</span></h3>
+            <p class="text-gray-400">Mark your calendars for the next battles.</p>
+        </div>
+
+        <div class="bg-gray-900/70 rounded-xl p-6 shadow-xl space-y-4">
+            <!-- Match 1 -->
+            <div class="flex items-center justify-between p-4 bg-gray-800 rounded-lg border-l-4 border-red-500">
+                <div class="flex items-center space-x-4">
+                    <span class="text-lg font-bold text-gray-200">SYRIX</span>
+                    <span class="text-sm text-gray-500">vs</span>
+                    <span class="text-lg font-bold accent-text">Team Nova</span>
+                </div>
+                <div class="text-right">
+                    <p class="text-sm font-semibold text-white">Aug 20, 2025 | 18:00 CEST</p>
+                    <p class="text-xs text-gray-400">Challengers League Finals</p>
+                </div>
+            </div>
+
+            <!-- Match 2 -->
+            <div class="flex items-center justify-between p-4 bg-gray-800 rounded-lg border-l-4 border-red-500">
+                <div class="flex items-center space-x-4">
+                    <span class="text-lg font-bold text-gray-200">SYRIX</span>
+                    <span class="text-sm text-gray-500">vs</span>
+                    <span class="text-lg font-bold accent-text">Ascend Gaming</span>
+                </div>
+                <div class="text-right">
+                    <p class="text-sm font-semibold text-white">Aug 25, 2025 | 15:30 PDT</p>
+                    <p class="text-xs text-gray-400">Group Stage | World Cup</p>
+                </div>
+            </div>
+
+            <!-- Match 3 -->
+            <div class="flex items-center justify-between p-4 bg-gray-800 rounded-lg border-l-4 border-red-500">
+                <div class="flex items-center space-x-4">
+                    <span class="text-lg font-bold text-gray-200">SYRIX</span>
+                    <span class="text-sm text-gray-500">vs</span>
+                    <span class="text-lg font-bold accent-text">Blackout Squad</span>
+                </div>
+                <div class="text-right">
+                    <p class="text-sm font-semibold text-white">Sep 01, 2025 | 20:00 KST</p>
+                    <p class="text-xs text-gray-400">Regional Qualifier</p>
                 </div>
             </div>
         </div>
@@ -267,5 +334,36 @@
             </div>
         </div>
     </footer>
+
+    <!-- Mobile Menu Toggle Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const menuToggle = document.getElementById('menu-toggle');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const menuIcon = document.getElementById('menu-icon');
+            const menuItems = document.querySelectorAll('.menu-item');
+
+            const toggleMenu = () => {
+                const isOpen = mobileMenu.classList.toggle('-translate-x-full');
+                if (isOpen) {
+                    menuIcon.innerHTML = '&#9776;'; // Hamburger
+                } else {
+                    menuIcon.innerHTML = '&#10005;'; // X mark
+                }
+            };
+
+            // Toggle menu on button click
+            menuToggle.addEventListener('click', toggleMenu);
+
+            // Close menu when a link is clicked
+            menuItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    if (!mobileMenu.classList.contains('-translate-x-full')) {
+                        toggleMenu();
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>
