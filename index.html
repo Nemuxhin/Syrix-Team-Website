@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Syrix Team Portal</title>
-    <!-- Load Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -20,7 +20,6 @@
             font-family: 'Inter', sans-serif;
             background-color: var(--dark-bg);
             color: var(--text-light);
-            /* Smooth scrolling for internal navigation */
             scroll-behavior: smooth;
         }
 
@@ -34,10 +33,9 @@
         }
 
             .accent-bg:hover {
-                background-color: #e02c2c; /* Slightly darker red on hover */
+                background-color: #e02c2c;
             }
 
-        /* Custom scrollbar for a sleek dark look */
         ::-webkit-scrollbar {
             width: 8px;
         }
@@ -55,24 +53,20 @@
                 background: #e02c2c;
             }
 
-        /* Hero Image/Banner Styling (Placeholder) */
         .hero-section {
             background-image: url('https://placehold.co/1200x500/111/fff?text=SYRIX+PORTAL+BANNER');
             background-size: cover;
             background-position: center;
             min-height: 70vh;
-            /* Added for Parallax effect */
             background-attachment: fixed;
         }
 
-        /* Fallback for devices that don't support background-attachment: fixed (iOS/Safari on mobile) */
         @media only screen and (max-width: 768px) {
             .hero-section {
                 background-attachment: scroll;
             }
         }
 
-        /* Animation for the Live indicator */
         @keyframes pulse-red {
             0%, 100% {
                 opacity: 1;
@@ -86,24 +80,102 @@
         .live-indicator {
             animation: pulse-red 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
         }
+
+        /* --- NEW: Interactive Flip Card CSS --- */
+        .player-card {
+            perspective: 1000px; /* Gives the 3D effect */
+        }
+
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.7s;
+            transform-style: preserve-3d;
+        }
+
+        .player-card:hover .card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden; /* For Safari */
+            backface-visibility: hidden;
+            border-radius: 0.75rem; /* Corresponds to rounded-xl */
+        }
+
+        .card-back {
+            background-color: var(--card-bg);
+            color: white;
+            transform: rotateY(180deg);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            text-align: center;
+        }
+        /* --- END: Flip Card CSS --- */
+
+        /* --- NEW: VOD Modal (Lightbox) CSS --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+
+            .modal-overlay.active {
+                opacity: 1;
+                visibility: visible;
+            }
+
+        .modal-content {
+            position: relative;
+            width: 90%;
+            max-width: 960px;
+            aspect-ratio: 16 / 9;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            color: #fff;
+            font-size: 2.5rem;
+            cursor: pointer;
+        }
+
+        .modal-content iframe {
+            width: 100%;
+            height: 100%;
+            border: 2px solid var(--primary-red);
+        }
+        /* --- END: VOD Modal CSS --- */
+
     </style>
 </head>
 <body>
 
-    <!-- Header & Navigation -->
     <header class="sticky top-0 z-50 bg-black/90 shadow-lg border-b border-red-900/50">
         <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
             <a href="#home" class="flex items-center space-x-2">
                 <span class="text-3xl font-extrabold accent-text">S</span>
                 <h1 class="text-xl font-extrabold uppercase tracking-widest">Syrix</h1>
             </a>
-
-            <!-- Mobile Menu Button -->
-            <button id="menu-toggle" class="md:hidden text-2xl z-50 p-2 focus:outline-none">
-                <span id="menu-icon">&#9776;</span>
-            </button>
-
-            <!-- Desktop Navigation -->
+            <button id="menu-toggle" class="md:hidden text-2xl z-50 p-2 focus:outline-none"><span id="menu-icon">&#9776;</span></button>
             <div class="hidden md:flex space-x-8 text-sm font-semibold">
                 <a href="#about" class="hover:accent-text transition duration-300">ABOUT</a>
                 <a href="#roster" class="hover:accent-text transition duration-300">ROSTER</a>
@@ -116,7 +188,6 @@
         </nav>
     </header>
 
-    <!-- Mobile Menu Drawer (Hidden by default) -->
     <div id="mobile-menu" class="fixed inset-0 bg-black/95 z-40 transform -translate-x-full transition-transform duration-300 md:hidden pt-24">
         <div class="flex flex-col items-center space-y-6 text-xl font-bold">
             <a href="#about" class="hover:accent-text transition duration-300 menu-item text-white">ABOUT</a>
@@ -129,426 +200,189 @@
         </div>
     </div>
 
-
-    <!-- Hero Section -->
-    <section id="home" class="hero-section flex items-center justify-center text-center p-6">
-        <div class="bg-black/80 p-8 md:p-12 rounded-xl shadow-2xl max-w-4xl border border-red-700/50">
-            <!-- New: Live Status Banner -->
-            <div class="flex items-center justify-center mb-6 py-2 px-4 rounded-full bg-red-900/50 border border-red-700 text-sm font-semibold">
-                <span class="live-indicator w-3 h-3 bg-red-500 rounded-full mr-2"></span>
-                <span class="text-white uppercase tracking-widest">TEAM SYRIX IS LIVE NOW ON TWITCH!</span>
-            </div>
-
-            <p class="text-sm md:text-md uppercase tracking-widest mb-4 accent-text font-bold">The Future of Competition</p>
-            <h2 class="text-4xl md:text-6xl font-extrabold leading-tight mb-6">
-                Dominate the Field.
-                <span class="accent-text block md:inline">Unite as Syrix.</span>
-            </h2>
-            <p class="text-gray-300 max-w-2xl mx-auto text-lg mb-8">
-                Welcome to the official portal for Syrix. We push the limits of performance in every arena, driven by innovation and relentless passion.
-            </p>
-            <a href="#roster" class="inline-block px-10 py-3 rounded-full accent-bg font-bold shadow-xl transform transition duration-300 hover:scale-105 hover:shadow-2xl">
-                MEET THE TEAM
-            </a>
-        </div>
-    </section>
-
-    <!-- Achievements/Stats Section (NEW) -->
-    <section id="achievements" class="bg-gray-900 py-12 mb-16 shadow-inner">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-3 gap-8 text-center">
-                <div class="border-r border-red-900/50 pr-4">
-                    <p class="text-5xl font-extrabold accent-text mb-1">5</p>
-                    <p class="text-sm uppercase tracking-wider text-gray-400">Major Titles</p>
+    <main>
+        <section id="home" class="hero-section flex items-center justify-center text-center p-6">
+            <div class="bg-black/80 p-8 md:p-12 rounded-xl shadow-2xl max-w-4xl border border-red-700/50" data-aos="zoom-in">
+                <div id="live-status-banner" class="flex items-center justify-center mb-6 py-2 px-4 rounded-full bg-red-900/50 border border-red-700 text-sm font-semibold hidden">
+                    <span class="live-indicator w-3 h-3 bg-red-500 rounded-full mr-2"></span>
+                    <span class="text-white uppercase tracking-widest">TEAM SYRIX IS LIVE NOW ON TWITCH!</span>
                 </div>
-                <div class="border-r border-red-900/50 pr-4">
-                    <p class="text-5xl font-extrabold accent-text mb-1">92%</p>
-                    <p class="text-sm uppercase tracking-wider text-gray-400">Win Rate (2025)</p>
-                </div>
-                <div>
-                    <p class="text-5xl font-extrabold accent-text mb-1">10k</p>
-                    <p class="text-sm uppercase tracking-wider text-gray-400">Peak Viewers</p>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- About / Mission Section -->
-    <section id="about" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div class="order-2 lg:order-1">
-                <h3 class="text-4xl font-extrabold mb-4">Our <span class="accent-text">Mission</span>: Domination.</h3>
-                <p class="text-gray-400 text-lg mb-6">
-                    Syrix was founded on the principle that uncompromising skill and unified strategy conquer all. We are more than a team; we are a disciplined organization dedicated to achieving excellence in every major competitive title.
+                <p class="text-sm md:text-md uppercase tracking-widest mb-4 accent-text font-bold">The Future of Competition</p>
+                <h2 class="text-4xl md:text-6xl font-extrabold leading-tight mb-6">
+                    Dominate the Field.
+                    <span class="accent-text block md:inline">Unite as Syrix.</span>
+                </h2>
+                <p class="text-gray-300 max-w-2xl mx-auto text-lg mb-8">
+                    Welcome to the official portal for Syrix. We push the limits of performance in every arena, driven by innovation and relentless passion.
                 </p>
-                <ul class="space-y-4 text-gray-300">
-                    <li class="flex items-center">
-                        <span class="accent-text mr-3 text-lg font-bold">&#10003;</span>
-                        **Relentless Training:** Commitment to performance-driven preparation.
-                    </li>
-                    <li class="flex items-center">
-                        <span class="accent-text mr-3 text-lg font-bold">&#10003;</span>
-                        **Fan-First Engagement:** Building the community through transparency and interaction.
-                    </li>
-                    <li class="flex items-center">
-                        <span class="accent-text mr-3 text-lg font-bold">&#10003;</span>
-                        **Unrivaled Professionalism:** Representing our partners and sponsors with honor.
-                    </li>
-                </ul>
-            </div>
-            <div class="order-1 lg:order-2">
-                <!-- Image source updated to use the provided URL -->
-                <img src="https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fs1.narvii.com%2Fimage%2Fj44ysgwzwlxwqmx4wd4pu3o6xdfsk7al_hq.jpg&f=1&nofb=1&ipt=384825d7f9f448e260697dd96e764eb187dce8d047933033e7ee6ed03d488228" alt="Syrix Team Photo" class="w-full rounded-xl shadow-2xl border border-red-700/50 object-cover h-full max-h-96 lg:max-h-full">
-            </div>
-        </div>
-    </section>
-
-    <!-- Roster Section - Now Dynamically Loaded from JS -->
-    <section id="roster" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div class="text-center mb-12">
-            <h3 class="text-3xl md:text-4xl font-bold mb-2">The <span class="accent-text">Active Roster</span> (5)</h3>
-            <p class="text-gray-400">The primary line-up for competition.</p>
-        </div>
-
-        <!-- Container for Active Players -->
-        <div id="active-roster-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 mb-16">
-            <!-- Roster cards will be injected here by JavaScript -->
-            <p class="text-center text-gray-500 lg:col-span-5">Loading roster...</p>
-        </div>
-
-        <!-- Substitutes Section -->
-        <div class="text-center mb-12 mt-16">
-            <h3 class="text-3xl md:text-4xl font-bold mb-2">Substitute <span class="accent-text">Players</span> (2)</h3>
-            <p class="text-gray-400">The versatile players ready to step in when needed.</p>
-        </div>
-
-        <!-- Container for Substitutes -->
-        <div id="sub-roster-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-8 max-w-4xl mx-auto mb-16">
-            <!-- Roster cards will be injected here by JavaScript -->
-            <p class="text-center text-gray-500 lg:col-span-2">Loading substitutes...</p>
-        </div>
-
-        <!-- Management Section -->
-        <div class="text-center mb-12 mt-16">
-            <h3 class="text-3xl md:text-4xl font-bold mb-2">Coaching & <span class="accent-text">Management</span> (2)</h3>
-            <p class="text-gray-400">The staff guiding our strategy and operations.</p>
-        </div>
-
-        <!-- Container for Management -->
-        <div id="management-roster-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            <!-- Roster cards will be injected here by JavaScript -->
-            <p class="text-center text-gray-500 lg:col-span-2">Loading management...</p>
-        </div>
-    </section>
-
-    <!-- Match Schedule Section -->
-    <section id="schedule" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div class="text-center mb-12">
-            <h3 class="text-3xl md:text-4xl font-bold mb-2">Upcoming <span class="accent-text">Schedule</span></h3>
-            <p class="text-gray-400">Mark your calendars for the next battles.</p>
-        </div>
-
-        <div class="bg-gray-900/70 rounded-xl p-6 shadow-xl space-y-4">
-            <!-- Match 1 -->
-            <div class="flex items-center justify-between p-4 bg-gray-800 rounded-lg border-l-4 border-red-500 transition duration-300 hover:bg-red-900/40 hover:border-red-300 cursor-pointer">
-                <div class="flex items-center space-x-4">
-                    <span class="text-lg font-bold text-gray-200">SYRIX</span>
-                    <span class="text-sm text-gray-500">vs</span>
-                    <span class="text-lg font-bold accent-text">Team Nova</span>
-                </div>
-                <div class="text-right">
-                    <p class="text-sm font-semibold text-white">Aug 20, 2025 | 18:00 CEST</p>
-                    <p class="text-xs text-gray-400">Challengers League Finals</p>
-                </div>
-            </div>
-
-            <!-- Match 2 -->
-            <div class="flex items-center justify-between p-4 bg-gray-800 rounded-lg border-l-4 border-red-500 transition duration-300 hover:bg-red-900/40 hover:border-red-300 cursor-pointer">
-                <div class="flex items-center space-x-4">
-                    <span class="text-lg font-bold text-gray-200">SYRIX</span>
-                    <span class="text-sm text-gray-500">vs</span>
-                    <span class="text-lg font-bold accent-text">Ascend Gaming</span>
-                </div>
-                <div class="text-right">
-                    <p class="text-sm font-semibold text-white">Aug 25, 2025 | 15:30 PDT</p>
-                    <p class="text-xs text-gray-400">Group Stage | World Cup</p>
-                </div>
-            </div>
-
-            <!-- Match 3 -->
-            <div class="flex items-center justify-between p-4 bg-gray-800 rounded-lg border-l-4 border-red-500 transition duration-300 hover:bg-red-900/40 hover:border-red-300 cursor-pointer">
-                <div class="flex items-center space-x-4">
-                    <span class="text-lg font-bold text-gray-200">SYRIX</span>
-                    <span class="text-sm text-gray-500">vs</span>
-                    <span class="text-lg font-bold accent-text">Blackout Squad</span>
-                </div>
-                <div class="text-right">
-                    <p class="text-sm font-semibold text-white">Sep 01, 2025 | 20:00 KST</p>
-                    <p class="text-xs text-gray-400">Regional Qualifier</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- VOD Gallery Section (New Addition) -->
-    <section id="vods" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div class="text-center mb-12">
-            <h3 class="text-3xl md:text-4xl font-bold mb-2">Highlights & <span class="accent-text">VODS</span></h3>
-            <p class="text-gray-400">Relive the best moments and crucial matches.</p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <!-- VOD Card 1 -->
-            <div class="bg-gray-800 rounded-xl overflow-hidden shadow-xl transform transition duration-300 hover:scale-[1.02]">
-                <div class="aspect-video bg-black flex items-center justify-center">
-                    <!-- Placeholder for embedded video thumbnail/iframe -->
-                    <img src="https://placehold.co/600x400/3a3a3a/fff?text=VOD+HIGHLIGHTS+1" alt="VOD Thumbnail 1" class="w-full h-full object-cover opacity-70">
-                </div>
-                <div class="p-4">
-                    <p class="text-sm font-bold accent-text">CHAMPIONSHIP FINALS</p>
-                    <p class="text-xs text-gray-400">The 5-game thriller that secured the title.</p>
-                </div>
-            </div>
-
-            <!-- VOD Card 2 -->
-            <div class="bg-gray-800 rounded-xl overflow-hidden shadow-xl transform transition duration-300 hover:scale-[1.02]">
-                <div class="aspect-video bg-black flex items-center justify-center">
-                    <!-- Placeholder for embedded video thumbnail/iframe -->
-                    <img src="https://placehold.co/600x400/3a3a3a/fff?text=VOD+BLITZ+MOMENTS" alt="VOD Thumbnail 2" class="w-full h-full object-cover opacity-70">
-                </div>
-                <div class="p-4">
-                    <p class="text-sm font-bold accent-text">BLITZ'S TOP 10 PLAYS</p>
-                    <p class="text-xs text-gray-400">A compilation of our Entry Fragger's best moves.</p>
-                </div>
-            </div>
-
-            <!-- VOD Card 3 -->
-            <div class="bg-gray-800 rounded-xl overflow-hidden shadow-xl transform transition duration-300 hover:scale-[1.02]">
-                <div class="aspect-video bg-black flex items-center justify-center">
-                    <!-- Placeholder for embedded video thumbnail/iframe -->
-                    <img src="https://placehold.co/600x400/3a3a3a/fff?text=VOD+INTERVIEW+V+SPECTRE" alt="VOD Thumbnail 3" class="w-full h-full object-cover opacity-70">
-                </div>
-                <div class="p-4">
-                    <p class="text-sm font-bold accent-text">POST-MATCH INTERVIEW</p>
-                    <p class="text-xs text-gray-400">Viper and Spectre discuss the strategy behind the win.</p>
-                </div>
-            </div>
-        </div>
-        <div class="text-center mt-10">
-            <a href="#" class="inline-block px-8 py-3 rounded-full bg-gray-700 font-bold transition duration-300 hover:bg-gray-600">
-                VIEW ALL CONTENT
-            </a>
-        </div>
-    </section>
-
-    <!-- News Feed Section (Static Content) -->
-    <section id="news" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div class="text-center mb-12">
-            <h3 class="text-3xl md:text-4xl font-bold mb-2">Syrix <span class="accent-text">News & Updates</span></h3>
-            <p class="text-gray-400">All the latest announcements and event details.</p>
-        </div>
-
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-
-            <!-- Major Featured Update Card -->
-            <div class="lg:col-span-2 bg-gray-800 p-8 rounded-xl shadow-2xl border border-red-700/50">
-                <p class="text-xs uppercase font-semibold accent-text mb-2">Featured Announcement</p>
-                <h4 class="text-2xl md:text-3xl font-extrabold mb-4">SYRIX SECURES CHAMPIONSHIP SPOT!</h4>
-                <p class="text-gray-400 mb-6">
-                    Our team demonstrated flawless execution this past weekend, sweeping the semi-finals to secure our spot in the Grand Championship next month. The team is now entering an intensive training regime to prepare for the final showdown. Support the squad!
-                </p>
-                <a href="#" class="px-6 py-2 rounded-full accent-bg font-bold transform transition duration-300 hover:scale-105 inline-block">
-                    READ MATCH RECAP
+                <a href="#roster" class="inline-block px-10 py-3 rounded-full accent-bg font-bold shadow-xl transform transition duration-300 hover:scale-105 hover:shadow-2xl">
+                    MEET THE TEAM
                 </a>
             </div>
+        </section>
 
-            <!-- News Feed Column (Static Placeholder) -->
-            <div id="news-feed" class="lg:col-span-1 space-y-4">
-
-                <!-- Post 1 -->
-                <div class="bg-gray-800 p-4 rounded-lg border-l-4 border-red-500 shadow-md">
-                    <p class="text-sm font-semibold mb-1">Patch Notes 3.0 Released</p>
-                    <p class="text-xs text-gray-400">The new game update brings significant changes to the map rotation. Our analyst team is already preparing VOD reviews.</p>
-                    <span class="text-xs text-gray-600 mt-2 block">— General News | 2 days ago</span>
-                </div>
-
-                <!-- Post 2 -->
-                <div class="bg-gray-800 p-4 rounded-lg border-l-4 border-red-500 shadow-md">
-                    <p class="text-sm font-semibold mb-1">Player Spectre Interview Live!</p>
-                    <p class="text-xs text-gray-400">Spectre sat down with 'Game Daily' to discuss meta strategy and his favorite agents. Link in our social media bio!</p>
-                    <span class="text-xs text-gray-600 mt-2 block">— Media Team | 5 days ago</span>
-                </div>
-
-                <!-- Post 3 -->
-                <div class="bg-gray-800 p-4 rounded-lg border-l-4 border-red-500 shadow-md">
-                    <p class="text-sm font-semibold mb-1">New Syrix Merchandise Drop</p>
-                    <p class="text-xs text-gray-400">Limited edition championship jerseys are now available in the store. Grab yours before they sell out!</p>
-                    <span class="text-xs text-gray-600 mt-2 block">— Merch Team | 1 week ago</span>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- Merchandise Spotlight Section (New Addition) -->
-    <section id="merch" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div class="text-center mb-12">
-            <h3 class="text-3xl md:text-4xl font-bold mb-2">Official <span class="accent-text">Merchandise</span></h3>
-            <p class="text-gray-400">New drops, exclusive jerseys, and gear to support the team.</p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <!-- Product Card 1 -->
-            <div class="bg-gray-800 rounded-xl overflow-hidden shadow-2xl border-2 border-transparent hover:border-red-700 transform transition duration-300 hover:scale-[1.02] cursor-pointer">
-                <img src="https://placehold.co/600x400/4a4a4a/fff?text=CHAMPIONSHIP+JERSEY" alt="Product 1" class="w-full h-64 object-cover">
-                <div class="p-6">
-                    <p class="text-xs uppercase font-semibold text-gray-400 mb-1">Apparel</p>
-                    <h4 class="text-xl font-extrabold accent-text mb-2">Syrix Pro Jersey (2025)</h4>
-                    <p class="text-lg font-bold text-white mb-4">$79.99 USD</p>
-                    <a href="#" class="inline-block px-6 py-2 rounded-full accent-bg font-bold shadow-md hover:bg-red-700">Buy Now</a>
-                </div>
-            </div>
-
-            <!-- Product Card 2 -->
-            <div class="bg-gray-800 rounded-xl overflow-hidden shadow-2xl border-2 border-transparent hover:border-red-700 transform transition duration-300 hover:scale-[1.02] cursor-pointer">
-                <img src="https://placehold.co/600x400/4a4a4a/fff?text=TEAM+HOODIE" alt="Product 2" class="w-full h-64 object-cover">
-                <div class="p-6">
-                    <p class="text-xs uppercase font-semibold text-gray-400 mb-1">Apparel</p>
-                    <h4 class="text-xl font-extrabold accent-text mb-2">Team Syrix Core Hoodie</h4>
-                    <p class="text-lg font-bold text-white mb-4">$64.99 USD</p>
-                    <a href="#" class="inline-block px-6 py-2 rounded-full accent-bg font-bold shadow-md hover:bg-red-700">Buy Now</a>
-                </div>
-            </div>
-
-            <!-- Product Card 3 -->
-            <div class="bg-gray-800 rounded-xl overflow-hidden shadow-2xl border-2 border-transparent hover:border-red-700 transform transition duration-300 hover:scale-[1.02] cursor-pointer">
-                <img src="https://placehold.co/600x400/4a4a4a/fff?text=SYRIX+MOUSEPAD" alt="Product 3" class="w-full h-64 object-cover">
-                <div class="p-6">
-                    <p class="text-xs uppercase font-semibold text-gray-400 mb-1">Accessories</p>
-                    <h4 class="text-xl font-extrabold accent-text mb-2">Syrix Precision Mousepad</h4>
-                    <p class="text-lg font-bold text-white mb-4">$29.99 USD</p>
-                    <a href="#" class="inline-block px-6 py-2 rounded-full accent-bg font-bold shadow-md hover:bg-red-700">Buy Now</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="text-center mt-12">
-            <a href="#" class="inline-block px-10 py-3 rounded-full bg-gray-700 font-bold transition duration-300 hover:bg-gray-600">
-                VIEW THE FULL STORE
-            </a>
-        </div>
-    </section>
-
-
-    <!-- Newsletter/Recruitment CTA Section -->
-    <section id="signup" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div class="bg-gray-900 rounded-xl p-8 md:p-12 text-center shadow-2xl border-2 border-red-700/60">
-            <h3 class="text-3xl md:text-5xl font-extrabold mb-4">
-                Join the <span class="accent-text">Syrix</span> Inner Circle
-            </h3>
-            <p class="text-gray-400 mb-8 max-w-2xl mx-auto">
-                Get exclusive news, early merch drops, and direct insights from the players.
-            </p>
-            <form class="max-w-xl mx-auto flex flex-col sm:flex-row gap-4">
-                <input type="email"
-                       placeholder="Enter your email address"
-                       class="flex-grow p-4 rounded-full bg-gray-800 border border-gray-700 text-white placeholder-gray-500 focus:ring-2 focus:ring-red-500 focus:border-red-500"
-                       required>
-                <button type="submit"
-                        class="px-8 py-3 rounded-full accent-bg font-bold shadow-xl transform transition duration-300 hover:scale-[1.05] hover:shadow-red-500/50">
-                    SIGN UP NOW
-                </button>
-            </form>
-        </div>
-    </section>
-
-
-    <!-- Partners / Sponsors Section -->
-    <section id="partners" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 bg-gray-900/50 rounded-xl shadow-inner mb-16">
-        <h3 class="text-center text-3xl font-bold mb-10">Trusted <span class="accent-text">Partners</span></h3>
-
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 items-center justify-center">
-            <div class="text-center opacity-70 hover:opacity-100 transition duration-300">
-                <p class="text-xl font-extrabold uppercase text-gray-400">QUANTUM GEAR</p>
-                <p class="text-xs text-gray-500">Tech Sponsor</p>
-            </div>
-            <div class="text-center opacity-70 hover:opacity-100 transition duration-300">
-                <p class="text-xl font-extrabold uppercase text-gray-400">HYPERENERGY</p>
-                <p class="text-xs text-gray-500">Beverage Partner</p>
-            </div>
-            <div class="text-center opacity-70 hover:opacity-100 transition duration-300">
-                <p class="text-xl font-extrabold uppercase text-gray-400">AURA CLOTHING</p>
-                <p class="text-xs text-gray-500">Apparel Sponsor</p>
-            </div>
-            <div class="text-center opacity-70 hover:opacity-100 transition duration-300">
-                <p class="text-xl font-extrabold uppercase text-gray-400">OMEGA NET</p>
-                <p class="text-xs text-gray-500">ISP Provider</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="bg-black border-t border-red-900/50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
-                <!-- Brand Info -->
-                <div>
-                    <h5 class="text-lg font-extrabold uppercase accent-text mb-3">Syrix</h5>
-                    <p class="text-sm text-gray-400">Dominate the Field. Unite as Syrix.</p>
-                </div>
-                <!-- Quick Links -->
-                <div>
-                    <h5 class="text-sm font-bold uppercase tracking-wider text-gray-300 mb-3">Company</h5>
-                    <ul class="space-y-2 text-sm text-gray-400">
-                        <li><a href="#" class="hover:accent-text transition duration-200">About Us</a></li>
-                        <li><a href="#" class="hover:accent-text transition duration-200">Careers</a></li>
-                        <li><a href="#" class="hover:accent-text transition duration-200">Contact</a></li>
-                    </ul>
-                </div>
-                <!-- Support -->
-                <div>
-                    <h5 class="text-sm font-bold uppercase tracking-wider text-gray-300 mb-3">Support</h5>
-                    <ul class="space-y-2 text-sm text-gray-400">
-                        <li><a href="#" class="hover:accent-text transition duration-200">FAQ</a></li>
-                        <li><a href="#" class="hover:accent-text transition duration-200">Privacy Policy</a></li>
-                        <li><a href="#" class="hover:accent-text transition duration-200">Terms of Service</a></li>
-                    </ul>
-                </div>
-                <!-- Social -->
-                <div>
-                    <h5 class="text-sm font-bold uppercase tracking-wider text-gray-300 mb-3">Connect</h5>
-                    <div class="flex space-x-4 text-xl">
-                        <!-- X Icon -->
-                        <a href="#" class="text-gray-400 hover:accent-text transition duration-200" title="X / Twitter">
-                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M18.901 1.101h3.333L16.2 9.074 24 22.899H18.667L14.07 15.341 8.923 22.899H1.52L9.436 12.836.067 1.101h5.586l3.81 5.378L13.56 1.101h5.341zM17.47 20.732h2.091L6.151 3.203H3.945L17.47 20.732z" /></svg>
-                        </a>
-                        <!-- Instagram Icon -->
-                        <a href="#" class="text-gray-400 hover:accent-text transition duration-200" title="Instagram">
-                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.18 1.95c.57 0 1.03.46 1.03 1.03v14.04c0 .57-.46 1.03-1.03 1.03h-8.36c-.57 0-1.03-.46-1.03-1.03V4.98c0-.57.46-1.03 1.03-1.03h8.36zm-4.18 2.05c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zm-5 5c0 2.76 2.24 5 5 5s5-2.24 5-5-2.24-5-5-5-5 2.24-5 5zm9.35-7.5c-.34 0-.62.28-.62.62s.28.62.62.62.62-.28.62-.62-.28-.62-.62-.62z" /></svg>
-                        </a>
-                        <!-- Twitch Icon -->
-                        <a href="#" class="text-gray-400 hover:accent-text transition duration-200" title="Twitch">
-                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M11.571 8.351h2.241v6.923h-2.241zm5.225-2.45v11.821h-3.951V17.02h-2.241v1.152H8.35v-1.152H5.568v-9.373h5.992zm-5.225 9.373h2.241V8.351H6.346zm5.225-2.45v2.45h2.241v-2.45zm5.225-2.45v2.45h2.241v-2.45zm-7.466 7.377H2.868V3.468h18.264V17.97H16.992l-2.735 2.735z" /></svg>
-                        </a>
+        <section id="achievements" class="bg-gray-900 py-12 mb-16 shadow-inner">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 text-center" data-aos="fade-up">
+                    <div class="sm:border-r border-red-900/50 pr-4">
+                        <p class="text-5xl font-extrabold accent-text mb-1">5</p>
+                        <p class="text-sm uppercase tracking-wider text-gray-400">Major Titles</p>
+                    </div>
+                    <div class="sm:border-r border-red-900/50 pr-4">
+                        <p class="text-5xl font-extrabold accent-text mb-1">92%</p>
+                        <p class="text-sm uppercase tracking-wider text-gray-400">Win Rate (2025)</p>
+                    </div>
+                    <div>
+                        <p class="text-5xl font-extrabold accent-text mb-1">10k</p>
+                        <p class="text-sm uppercase tracking-wider text-gray-400">Peak Viewers</p>
                     </div>
                 </div>
             </div>
+        </section>
 
-            <div class="mt-8 pt-8 border-t border-gray-800 text-center text-sm text-gray-600">
-                &copy; 2025 Syrix Team Portal. All Rights Reserved.
+        <section id="about" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="order-2 lg:order-1" data-aos="fade-right">
+                    <h3 class="text-4xl font-extrabold mb-4">Our <span class="accent-text">Mission</span>: Domination.</h3>
+                    <p class="text-gray-400 text-lg mb-6">Syrix was founded on the principle that uncompromising skill and unified strategy conquer all. We are more than a team; we are a disciplined organization dedicated to achieving excellence in every major competitive title.</p>
+                    <ul class="space-y-4 text-gray-300">
+                        <li class="flex items-center"><span class="accent-text mr-3 text-lg font-bold">&#10003;</span>**Relentless Training:** Commitment to performance-driven preparation.</li>
+                        <li class="flex items-center"><span class="accent-text mr-3 text-lg font-bold">&#10003;</span>**Fan-First Engagement:** Building the community through transparency and interaction.</li>
+                        <li class="flex items-center"><span class="accent-text mr-3 text-lg font-bold">&#10003;</span>**Unrivaled Professionalism:** Representing our partners and sponsors with honor.</li>
+                    </ul>
+                </div>
+                <div class="order-1 lg:order-2" data-aos="fade-left">
+                    <img src="https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fs1.narvii.com%2Fimage%2Fj44ysgwzwlxwqmx4wd4pu3o6xdfsk7al_hq.jpg&f=1&nofb=1&ipt=384825d7f9f448e260697dd96e764eb187dce8d047933033e7ee6ed03d488228" alt="Syrix Team posing together" class="w-full rounded-xl shadow-2xl border border-red-700/50 object-cover h-full max-h-96 lg:max-h-full" loading="lazy">
+                </div>
             </div>
+        </section>
+
+        <section id="roster" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <div class="text-center mb-12" data-aos="fade-up"><h3 class="text-3xl md:text-4xl font-bold mb-2">The <span class="accent-text">Active Roster</span> (5)</h3><p class="text-gray-400">The primary line-up for competition.</p></div>
+            <div id="active-roster-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 mb-16"><p class="text-center text-gray-500 lg:col-span-5">Loading roster...</p></div>
+            <div class="text-center mb-12 mt-16" data-aos="fade-up"><h3 class="text-3xl md:text-4xl font-bold mb-2">Substitute <span class="accent-text">Players</span> (2)</h3><p class="text-gray-400">The versatile players ready to step in when needed.</p></div>
+            <div id="sub-roster-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-8 max-w-4xl mx-auto mb-16"><p class="text-center text-gray-500 lg:col-span-2">Loading substitutes...</p></div>
+            <div class="text-center mb-12 mt-16" data-aos="fade-up"><h3 class="text-3xl md:text-4xl font-bold mb-2">Coaching & <span class="accent-text">Management</span> (2)</h3><p class="text-gray-400">The staff guiding our strategy and operations.</p></div>
+            <div id="management-roster-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-8 max-w-4xl mx-auto"><p class="text-center text-gray-500 lg:col-span-2">Loading management...</p></div>
+        </section>
+
+        <section id="schedule" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <div class="text-center mb-12" data-aos="fade-up">
+                <h3 class="text-3xl md:text-4xl font-bold mb-2">Upcoming <span class="accent-text">Schedule</span></h3>
+                <p class="text-gray-400">Mark your calendars for the next battles.</p>
+            </div>
+            <div class="bg-gray-900/70 rounded-xl p-6 shadow-xl space-y-4" data-aos="fade-up">
+            </div>
+            <div class="text-center mt-8" data-aos="fade-up" data-aos-delay="200">
+                <p class="text-gray-400 uppercase tracking-wider text-sm">Next match starts in:</p>
+                <p id="countdown-timer" class="text-4xl font-extrabold accent-text mt-2">Calculating...</p>
+            </div>
+        </section>
+
+        <section id="vods" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <div class="text-center mb-12" data-aos="fade-up">
+                <h3 class="text-3xl md:text-4xl font-bold mb-2">Highlights & <span class="accent-text">VODS</span></h3>
+                <p class="text-gray-400">Relive the best moments and crucial matches.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="vod-card bg-gray-800 rounded-xl overflow-hidden shadow-xl transform transition duration-300 hover:scale-[1.02] cursor-pointer" data-aos="fade-up" data-video-id="dQw4w9WgXcQ">
+                    <div class="aspect-video bg-black flex items-center justify-center"><img src="https://placehold.co/600x400/3a3a3a/fff?text=VOD+HIGHLIGHTS+1" alt="Championship Finals VOD Thumbnail" class="w-full h-full object-cover opacity-70" loading="lazy"></div>
+                    <div class="p-4"><p class="text-sm font-bold accent-text">CHAMPIONSHIP FINALS</p><p class="text-xs text-gray-400">The 5-game thriller that secured the title.</p></div>
+                </div>
+                <div class="vod-card bg-gray-800 rounded-xl overflow-hidden shadow-xl transform transition duration-300 hover:scale-[1.02] cursor-pointer" data-aos="fade-up" data-aos-delay="100" data-video-id="dQw4w9WgXcQ">
+                    <div class="aspect-video bg-black flex items-center justify-center"><img src="https://placehold.co/600x400/3a3a3a/fff?text=VOD+BLITZ+MOMENTS" alt="Blitz's Top Plays VOD Thumbnail" class="w-full h-full object-cover opacity-70" loading="lazy"></div>
+                    <div class="p-4"><p class="text-sm font-bold accent-text">BLITZ'S TOP 10 PLAYS</p><p class="text-xs text-gray-400">A compilation of our Entry Fragger's best moves.</p></div>
+                </div>
+                <div class="vod-card bg-gray-800 rounded-xl overflow-hidden shadow-xl transform transition duration-300 hover:scale-[1.02] cursor-pointer" data-aos="fade-up" data-aos-delay="200" data-video-id="dQw4w9WgXcQ">
+                    <div class="aspect-video bg-black flex items-center justify-center"><img src="https://placehold.co/600x400/3a3a3a/fff?text=VOD+INTERVIEW+V+SPECTRE" alt="Post-match interview VOD Thumbnail" class="w-full h-full object-cover opacity-70" loading="lazy"></div>
+                    <div class="p-4"><p class="text-sm font-bold accent-text">POST-MATCH INTERVIEW</p><p class="text-xs text-gray-400">Viper and Spectre discuss the strategy behind the win.</p></div>
+                </div>
+            </div>
+            <div class="text-center mt-10" data-aos="fade-up"><a href="#" class="inline-block px-8 py-3 rounded-full bg-gray-700 font-bold transition duration-300 hover:bg-gray-600">VIEW ALL CONTENT</a></div>
+        </section>
+
+        <section id="news" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <div class="text-center mb-12" data-aos="fade-up"><h3 class="text-3xl md:text-4xl font-bold mb-2">Syrix <span class="accent-text">News & Updates</span></h3><p class="text-gray-400">All the latest announcements and event details.</p></div>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div class="lg:col-span-2 bg-gray-800 p-8 rounded-xl shadow-2xl border border-red-700/50" data-aos="fade-right">
+                    <p class="text-xs uppercase font-semibold accent-text mb-2">Featured Announcement</p><h4 class="text-2xl md:text-3xl font-extrabold mb-4">SYRIX SECURES CHAMPIONSHIP SPOT!</h4>
+                    <p class="text-gray-400 mb-6">Our team demonstrated flawless execution this past weekend, sweeping the semi-finals to secure our spot in the Grand Championship next month. The team is now entering an intensive training regime to prepare for the final showdown. Support the squad!</p>
+                    <a href="#" class="px-6 py-2 rounded-full accent-bg font-bold transform transition duration-300 hover:scale-105 inline-block">READ MATCH RECAP</a>
+                </div>
+                <div id="news-feed" class="lg:col-span-1 space-y-4" data-aos="fade-left">
+                    <div class="bg-gray-800 p-4 rounded-lg border-l-4 border-red-500 shadow-md"><p class="text-sm font-semibold mb-1">Patch Notes 3.0 Released</p><p class="text-xs text-gray-400">The new game update brings significant changes to the map rotation. Our analyst team is already preparing VOD reviews.</p><span class="text-xs text-gray-600 mt-2 block">— General News | 2 days ago</span></div>
+                    <div class="bg-gray-800 p-4 rounded-lg border-l-4 border-red-500 shadow-md"><p class="text-sm font-semibold mb-1">Player Spectre Interview Live!</p><p class="text-xs text-gray-400">Spectre sat down with 'Game Daily' to discuss meta strategy and his favorite agents. Link in our social media bio!</p><span class="text-xs text-gray-600 mt-2 block">— Media Team | 5 days ago</span></div>
+                    <div class="bg-gray-800 p-4 rounded-lg border-l-4 border-red-500 shadow-md"><p class="text-sm font-semibold mb-1">New Syrix Merchandise Drop</p><p class="text-xs text-gray-400">Limited edition championship jerseys are now available in the store. Grab yours before they sell out!</p><span class="text-xs text-gray-600 mt-2 block">— Merch Team | 1 week ago</span></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="merch" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <div class="text-center mb-12" data-aos="fade-up"><h3 class="text-3xl md:text-4xl font-bold mb-2">Official <span class="accent-text">Merchandise</span></h3><p class="text-gray-400">New drops, exclusive jerseys, and gear to support the team.</p></div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-gray-800 rounded-xl overflow-hidden shadow-2xl border-2 border-transparent hover:border-red-700 transform transition duration-300 hover:scale-[1.02] cursor-pointer" data-aos="fade-up"><img src="https://placehold.co/600x400/4a4a4a/fff?text=CHAMPIONSHIP+JERSEY" alt="Syrix Pro Jersey 2025" class="w-full h-64 object-cover" loading="lazy"><div class="p-6"><p class="text-xs uppercase font-semibold text-gray-400 mb-1">Apparel</p><h4 class="text-xl font-extrabold accent-text mb-2">Syrix Pro Jersey (2025)</h4><p class="text-lg font-bold text-white mb-4">$79.99 USD</p><a href="#" class="inline-block px-6 py-2 rounded-full accent-bg font-bold shadow-md hover:bg-red-700">Buy Now</a></div></div>
+                <div class="bg-gray-800 rounded-xl overflow-hidden shadow-2xl border-2 border-transparent hover:border-red-700 transform transition duration-300 hover:scale-[1.02] cursor-pointer" data-aos="fade-up" data-aos-delay="100"><img src="https://placehold.co/600x400/4a4a4a/fff?text=TEAM+HOODIE" alt="Team Syrix Core Hoodie" class="w-full h-64 object-cover" loading="lazy"><div class="p-6"><p class="text-xs uppercase font-semibold text-gray-400 mb-1">Apparel</p><h4 class="text-xl font-extrabold accent-text mb-2">Team Syrix Core Hoodie</h4><p class="text-lg font-bold text-white mb-4">$64.99 USD</p><a href="#" class="inline-block px-6 py-2 rounded-full accent-bg font-bold shadow-md hover:bg-red-700">Buy Now</a></div></div>
+                <div class="bg-gray-800 rounded-xl overflow-hidden shadow-2xl border-2 border-transparent hover:border-red-700 transform transition duration-300 hover:scale-[1.02] cursor-pointer" data-aos="fade-up" data-aos-delay="200"><img src="https://placehold.co/600x400/4a4a4a/fff?text=SYRIX+MOUSEPAD" alt="Syrix Precision Mousepad" class="w-full h-64 object-cover" loading="lazy"><div class="p-6"><p class="text-xs uppercase font-semibold text-gray-400 mb-1">Accessories</p><h4 class="text-xl font-extrabold accent-text mb-2">Syrix Precision Mousepad</h4><p class="text-lg font-bold text-white mb-4">$29.99 USD</p><a href="#" class="inline-block px-6 py-2 rounded-full accent-bg font-bold shadow-md hover:bg-red-700">Buy Now</a></div></div>
+            </div>
+            <div class="text-center mt-12" data-aos="fade-up"><a href="#" class="inline-block px-10 py-3 rounded-full bg-gray-700 font-bold transition duration-300 hover:bg-gray-600">VIEW THE FULL STORE</a></div>
+        </section>
+
+        <section id="signup" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <div class="bg-gray-900 rounded-xl p-8 md:p-12 text-center shadow-2xl border-2 border-red-700/60" data-aos="zoom-in">
+                <h3 class="text-3xl md:text-5xl font-extrabold mb-4">Join the <span class="accent-text">Syrix</span> Inner Circle</h3>
+                <p class="text-gray-400 mb-8 max-w-2xl mx-auto">Get exclusive news, early merch drops, and direct insights from the players.</p>
+                <form class="max-w-xl mx-auto flex flex-col sm:flex-row gap-4"><input type="email" placeholder="Enter your email address" class="flex-grow p-4 rounded-full bg-gray-800 border border-gray-700 text-white placeholder-gray-500 focus:ring-2 focus:ring-red-500 focus:border-red-500" required><button type="submit" class="px-8 py-3 rounded-full accent-bg font-bold shadow-xl transform transition duration-300 hover:scale-[1.05] hover:shadow-red-500/50">SIGN UP NOW</button></form>
+            </div>
+        </section>
+
+        <section id="partners" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 bg-gray-900/50 rounded-xl shadow-inner mb-16" data-aos="fade-up">
+            <h3 class="text-center text-3xl font-bold mb-10">Trusted <span class="accent-text">Partners</span></h3>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 items-center justify-center">
+                <div class="text-center opacity-70 hover:opacity-100 transition duration-300"><p class="text-xl font-extrabold uppercase text-gray-400">QUANTUM GEAR</p><p class="text-xs text-gray-500">Tech Sponsor</p></div>
+                <div class="text-center opacity-70 hover:opacity-100 transition duration-300"><p class="text-xl font-extrabold uppercase text-gray-400">HYPERENERGY</p><p class="text-xs text-gray-500">Beverage Partner</p></div>
+                <div class="text-center opacity-70 hover:opacity-100 transition duration-300"><p class="text-xl font-extrabold uppercase text-gray-400">AURA CLOTHING</p><p class="text-xs text-gray-500">Apparel Sponsor</p></div>
+                <div class="text-center opacity-70 hover:opacity-100 transition duration-300"><p class="text-xl font-extrabold uppercase text-gray-400">OMEGA NET</p><p class="text-xs text-gray-500">ISP Provider</p></div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-black border-t border-red-900/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                <div><h5 class="text-lg font-extrabold uppercase accent-text mb-3">Syrix</h5><p class="text-sm text-gray-400">Dominate the Field. Unite as Syrix.</p></div>
+                <div><h5 class="text-sm font-bold uppercase tracking-wider text-gray-300 mb-3">Company</h5><ul class="space-y-2 text-sm text-gray-400"><li><a href="#" class="hover:accent-text transition duration-200">About Us</a></li><li><a href="#" class="hover:accent-text transition duration-200">Careers</a></li><li><a href="#" class="hover:accent-text transition duration-200">Contact</a></li></ul></div>
+                <div><h5 class="text-sm font-bold uppercase tracking-wider text-gray-300 mb-3">Support</h5><ul class="space-y-2 text-sm text-gray-400"><li><a href="#" class="hover:accent-text transition duration-200">FAQ</a></li><li><a href="#" class="hover:accent-text transition duration-200">Privacy Policy</a></li><li><a href="#" class="hover:accent-text transition duration-200">Terms of Service</a></li></ul></div>
+                <div>
+                    <h5 class="text-sm font-bold uppercase tracking-wider text-gray-300 mb-3">Connect</h5>
+                    <div class="flex space-x-4 text-xl">
+                        <a href="#" class="text-gray-400 hover:accent-text transition duration-200" title="X / Twitter" aria-label="Follow Syrix on X"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M18.901 1.101h3.333L16.2 9.074 24 22.899H18.667L14.07 15.341 8.923 22.899H1.52L9.436 12.836.067 1.101h5.586l3.81 5.378L13.56 1.101h5.341zM17.47 20.732h2.091L6.151 3.203H3.945L17.47 20.732z" /></svg></a>
+                        <a href="#" class="text-gray-400 hover:accent-text transition duration-200" title="Instagram" aria-label="Follow Syrix on Instagram"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.18 1.95c.57 0 1.03.46 1.03 1.03v14.04c0 .57-.46 1.03-1.03 1.03h-8.36c-.57 0-1.03-.46-1.03-1.03V4.98c0-.57.46-1.03 1.03-1.03h8.36zm-4.18 2.05c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zm-5 5c0 2.76 2.24 5 5 5s5-2.24 5-5-2.24-5-5-5-5 2.24-5 5zm9.35-7.5c-.34 0-.62.28-.62.62s.28.62.62.62.62-.28.62-.62-.28-.62-.62-.62z" /></svg></a>
+                        <a href="#" class="text-gray-400 hover:accent-text transition duration-200" title="Twitch" aria-label="Watch Syrix on Twitch"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M11.571 8.351h2.241v6.923h-2.241zm5.225-2.45v11.821h-3.951V17.02h-2.241v1.152H8.35v-1.152H5.568v-9.373h5.992zm-5.225 9.373h2.241V8.351H6.346zm5.225-2.45v2.45h2.241v-2.45zm5.225-2.45v2.45h2.241v-2.45zm-7.466 7.377H2.868V3.468h18.264V17.97H16.992l-2.735 2.735z" /></svg></a>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-8 pt-8 border-t border-gray-800 text-center text-sm text-gray-600">&copy; 2025 Syrix Team Portal. All Rights Reserved.</div>
         </div>
     </footer>
 
-    <!-- Mobile Menu Toggle Script & Dynamic Roster Script -->
+    <div id="vod-modal" class="modal-overlay">
+        <div class="modal-content">
+            <span id="modal-close-btn" class="modal-close">&times;</span>
+            <div id="video-container"></div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
     <script>
         // --- 1. Team Data Structure (EDIT THIS TO UPDATE ROSTER) ---
         const teamData = {
             active: [
-                { name: "Aries", discordTag: "Aries", role: "Sentinal", desc: "The mastermind behind every strategy and decisive moment.", pfpUrl: "https://placehold.co/400x300/333/fff?text=VIPER" },
-                { name: "Cat", discordTag: "Cat", role: "Controller", desc: "Unmatched aggression and precision on the front lines.", pfpUrl: "https://placehold.co/400x300/333/fff?text=BLITZ" },
-                { name: "Nicky", discordTag: "Nicky", role: "Iniciator", desc: "The adaptive player, ensuring team utility and balance.", pfpUrl: "https://placehold.co/400x300/333/fff?text=SPECTRE" },
-                { name: "Tawz", discordTag: "Tawz", role: "Duelist", desc: "Deadly accuracy and the primary source of damage output.", pfpUrl: "https://placehold.co/400x300/333/fff?text=ZERO" },
+                { name: "Aries", discordTag: "Aries", role: "Sentinal", desc: "The mastermind behind every strategy and decisive moment.", pfpUrl: "https://placehold.co/400x300/333/fff?text=ARIES" },
+                { name: "Cat", discordTag: "Cat", role: "Controller", desc: "Unmatched aggression and precision on the front lines.", pfpUrl: "https://placehold.co/400x300/333/fff?text=CAT" },
+                { name: "Nicky", discordTag: "Nicky", role: "Iniciator", desc: "The adaptive player, ensuring team utility and balance.", pfpUrl: "https://placehold.co/400x300/333/fff?text=NICKY" },
+                { name: "Tawz", discordTag: "Tawz", role: "Duelist", desc: "Deadly accuracy and the primary source of damage output.", pfpUrl: "https://placehold.co/400x300/333/fff?text=TAWZ" },
                 { name: "Nemuxhin", discordTag: "Nemuxhin", role: "Flex Player", desc: "Versatile player capable of adapting to any team composition.", pfpUrl: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.pinimg.com%2F736x%2Fb9%2Fdb%2Fb3%2Fb9dbb3de029994cc135d13935290d000.jpg&f=1&nofb=1&ipt=107844a6e7198fc0c62c7646539b080c2e56f10f146e3e871b32962893a082ff" },
             ],
             substitutes: [
@@ -561,19 +395,37 @@
             ]
         };
 
+        // NEW: Schedule Data
+        const scheduleData = [
+            { opponent: "Team Nova", event: "Challengers League Finals", date: "Aug 20, 2025 18:00:00" },
+            { opponent: "Ascend Gaming", event: "Group Stage | World Cup", date: "Aug 25, 2025 15:30:00" },
+            { opponent: "Blackout Squad", event: "Regional Qualifier", date: "Sep 01, 2025 20:00:00" },
+        ];
+
+
         // --- 2. Roster Rendering Function ---
-        const createPlayerCard = (player, isManagement) => {
-            const baseClasses = "bg-gray-800 rounded-xl overflow-hidden shadow-2xl transform transition duration-500 hover:scale-[1.03]";
-            const borderClass = isManagement ? "border-b-4 border-gray-500" : "border-b-4 border-red-700";
+        // NEW: Updated to create an interactive flip card
+        const createPlayerCard = (player, isManagement, delay) => {
+            const borderClass = isManagement ? "border-gray-500" : "border-red-700";
             const textColorClass = isManagement ? "text-white" : "accent-text";
 
             return `
-                    <div class="${baseClasses} ${borderClass}">
-                        <img src="${player.pfpUrl}" alt="${player.name}'s Profile Picture" class="w-full h-48 object-cover rounded-t-xl" onerror="this.onerror=null;this.src='https://placehold.co/400x300/333/fff?text=PFP';">
-                        <div class="p-6 text-center">
-                            <h4 class="text-2xl font-extrabold ${textColorClass} mb-1">${player.name}</h4>
-                            <p class="text-sm font-semibold text-gray-400 mb-1">${player.role}</p>
-                            <img src="https://placehold.co/100x20/444/ff3333?text=STATUS+IMG" alt="Status Placeholder" class="mx-auto mt-3 rounded-full" />
+                    <div class="player-card" data-aos="fade-up" data-aos-delay="${delay}">
+                        <div class="card-inner">
+                            <div class="card-front bg-gray-800 rounded-xl overflow-hidden shadow-2xl border-b-4 ${borderClass}">
+                                 <img src="${player.pfpUrl}" alt="${player.name}'s Profile Picture" class="w-full h-48 object-cover" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/400x300/333/fff?text=PFP';">
+                                 <div class="p-6 text-center">
+                                     <h4 class="text-2xl font-extrabold ${textColorClass} mb-1">${player.name}</h4>
+                                     <p class="text-sm font-semibold text-gray-400 mb-1">${player.role}</p>
+                                     <img src="https://placehold.co/100x20/444/ff3333?text=STATUS+IMG" alt="Player status image" class="mx-auto mt-3 rounded-full" />
+                                 </div>
+                            </div>
+                            <div class="card-back">
+                                <div>
+                                    <h5 class="text-xl font-bold accent-text">${player.name}</h5>
+                                    <p class="text-gray-300 mt-2">${player.desc}</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 `;
@@ -581,20 +433,26 @@
 
         const renderRoster = (data, containerId, isManagement = false) => {
             const container = document.getElementById(containerId);
+            if (!container) return;
             container.innerHTML = ''; // Clear loading text
-
             if (data.length === 0) {
-                container.innerHTML = `<p class="text-center text-gray-500 lg:col-span-5">No ${containerId.replace('-container', '').replace('-', ' ')} listed.</p>`;
+                container.innerHTML = `<p class="text-center text-gray-500 lg:col-span-5">No members listed.</p>`;
                 return;
             }
-
-            data.forEach(player => {
-                container.innerHTML += createPlayerCard(player, isManagement);
+            data.forEach((player, index) => {
+                container.innerHTML += createPlayerCard(player, isManagement, index * 100);
             });
         };
 
-        // --- 3. Initialization ---
+        // --- 3. Initialization and Event Listeners ---
         document.addEventListener('DOMContentLoaded', () => {
+            // Initialize AOS
+            AOS.init({
+                duration: 800,
+                once: true,
+                offset: 50,
+            });
+
             // Mobile Menu Toggle Logic
             const menuToggle = document.getElementById('menu-toggle');
             const mobileMenu = document.getElementById('mobile-menu');
@@ -602,18 +460,12 @@
             const menuItems = document.querySelectorAll('.menu-item');
 
             const toggleMenu = () => {
-                const isOpen = mobileMenu.classList.toggle('-translate-x-full');
-                if (isOpen) {
-                    menuIcon.innerHTML = '&#9776;'; // Hamburger
-                } else {
-                    menuIcon.innerHTML = '&#10005;'; // X mark
-                }
+                const isClosed = mobileMenu.classList.contains('-translate-x-full');
+                mobileMenu.classList.toggle('-translate-x-full');
+                menuIcon.innerHTML = isClosed ? '&#10005;' : '&#9776;';
             };
 
-            // Toggle menu on button click
             menuToggle.addEventListener('click', toggleMenu);
-
-            // Close menu when a link is clicked
             menuItems.forEach(item => {
                 item.addEventListener('click', () => {
                     if (!mobileMenu.classList.contains('-translate-x-full')) {
@@ -622,10 +474,73 @@
                 });
             });
 
-            // Render the Roster on page load
+            // Render the Roster
             renderRoster(teamData.active, 'active-roster-container');
             renderRoster(teamData.substitutes, 'sub-roster-container');
             renderRoster(teamData.management, 'management-roster-container', true);
+
+
+            // --- NEW: Dynamic Live Status ---
+            const liveBanner = document.getElementById('live-status-banner');
+            const isTeamLive = true; // SIMULATION: Change to false to hide.
+
+            if (isTeamLive) {
+                liveBanner.classList.remove('hidden');
+            }
+            // In a real app, you would replace the above with a Twitch API call.
+            // Example: checkTwitchStatus('syrix_gaming').then(isLive => if(isLive) ... )
+
+
+            // --- NEW: Countdown Timer Logic ---
+            const countdownElement = document.getElementById('countdown-timer');
+            const nextMatchDate = new Date(scheduleData[0].date).getTime();
+
+            const countdownInterval = setInterval(() => {
+                const now = new Date().getTime();
+                const distance = nextMatchDate - now;
+
+                if (distance < 0) {
+                    clearInterval(countdownInterval);
+                    countdownElement.innerHTML = "MATCH IN PROGRESS";
+                    return;
+                }
+
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                countdownElement.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+            }, 1000);
+
+
+            // --- NEW: VOD Modal (Lightbox) Logic ---
+            const modal = document.getElementById('vod-modal');
+            const closeBtn = document.getElementById('modal-close-btn');
+            const videoContainer = document.getElementById('video-container');
+            const vodCards = document.querySelectorAll('.vod-card');
+
+            vodCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    const videoId = card.getAttribute('data-video-id');
+                    if (videoId) {
+                        videoContainer.innerHTML = `<iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+                        modal.classList.add('active');
+                    }
+                });
+            });
+
+            const closeModal = () => {
+                modal.classList.remove('active');
+                videoContainer.innerHTML = ''; // Stop the video
+            };
+
+            closeBtn.addEventListener('click', closeModal);
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
         });
     </script>
 </body>
