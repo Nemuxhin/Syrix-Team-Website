@@ -12,14 +12,12 @@
             --primary-red: #ff3333;
             --dark-bg: #1a1a1a;
             --card-bg: #282828;
-            --text-light: #ffffff;
-            --text-secondary: #aaaaaa;
         }
 
         body {
             font-family: 'Inter', sans-serif;
             background-color: var(--dark-bg);
-            color: var(--text-light);
+            color: white;
             scroll-behavior: smooth;
         }
 
@@ -81,9 +79,9 @@
             animation: pulse-red 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
         }
 
-        /* --- NEW: Interactive Flip Card CSS --- */
+        /* Interactive Flip Card CSS */
         .player-card {
-            perspective: 1000px; /* Gives the 3D effect */
+            perspective: 1000px;
         }
 
         .card-inner {
@@ -102,9 +100,9 @@
             position: absolute;
             width: 100%;
             height: 100%;
-            -webkit-backface-visibility: hidden; /* For Safari */
+            -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
-            border-radius: 0.75rem; /* Corresponds to rounded-xl */
+            border-radius: 0.75rem;
         }
 
         .card-back {
@@ -118,9 +116,8 @@
             padding: 1.5rem;
             text-align: center;
         }
-        /* --- END: Flip Card CSS --- */
 
-        /* --- NEW: VOD Modal (Lightbox) CSS --- */
+        /* VOD Modal (Lightbox) CSS */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -163,18 +160,13 @@
             height: 100%;
             border: 2px solid var(--primary-red);
         }
-        /* --- END: VOD Modal CSS --- */
-
     </style>
 </head>
 <body>
 
     <header class="sticky top-0 z-50 bg-black/90 shadow-lg border-b border-red-900/50">
         <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-            <a href="#home" class="flex items-center space-x-2">
-                <span class="text-3xl font-extrabold accent-text">S</span>
-                <h1 class="text-xl font-extrabold uppercase tracking-widest">Syrix</h1>
-            </a>
+            <a href="#home" class="flex items-center space-x-2"><span class="text-3xl font-extrabold accent-text">S</span><h1 class="text-xl font-extrabold uppercase tracking-widest">Syrix</h1></a>
             <button id="menu-toggle" class="md:hidden text-2xl z-50 p-2 focus:outline-none"><span id="menu-icon">&#9776;</span></button>
             <div class="hidden md:flex space-x-8 text-sm font-semibold">
                 <a href="#about" class="hover:accent-text transition duration-300">ABOUT</a>
@@ -207,36 +199,19 @@
                     <span class="live-indicator w-3 h-3 bg-red-500 rounded-full mr-2"></span>
                     <span class="text-white uppercase tracking-widest">TEAM SYRIX IS LIVE NOW ON TWITCH!</span>
                 </div>
-
                 <p class="text-sm md:text-md uppercase tracking-widest mb-4 accent-text font-bold">The Future of Competition</p>
-                <h2 class="text-4xl md:text-6xl font-extrabold leading-tight mb-6">
-                    Dominate the Field.
-                    <span class="accent-text block md:inline">Unite as Syrix.</span>
-                </h2>
-                <p class="text-gray-300 max-w-2xl mx-auto text-lg mb-8">
-                    Welcome to the official portal for Syrix. We push the limits of performance in every arena, driven by innovation and relentless passion.
-                </p>
-                <a href="#roster" class="inline-block px-10 py-3 rounded-full accent-bg font-bold shadow-xl transform transition duration-300 hover:scale-105 hover:shadow-2xl">
-                    MEET THE TEAM
-                </a>
+                <h2 class="text-4xl md:text-6xl font-extrabold leading-tight mb-6">Dominate the Field. <span class="accent-text block md:inline">Unite as Syrix.</span></h2>
+                <p class="text-gray-300 max-w-2xl mx-auto text-lg mb-8">Welcome to the official portal for Syrix. We push the limits of performance in every arena, driven by innovation and relentless passion.</p>
+                <a href="#roster" class="inline-block px-10 py-3 rounded-full accent-bg font-bold shadow-xl transform transition duration-300 hover:scale-105 hover:shadow-2xl">MEET THE TEAM</a>
             </div>
         </section>
 
         <section id="achievements" class="bg-gray-900 py-12 mb-16 shadow-inner">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 text-center" data-aos="fade-up">
-                    <div class="sm:border-r border-red-900/50 pr-4">
-                        <p class="text-5xl font-extrabold accent-text mb-1">5</p>
-                        <p class="text-sm uppercase tracking-wider text-gray-400">Major Titles</p>
-                    </div>
-                    <div class="sm:border-r border-red-900/50 pr-4">
-                        <p class="text-5xl font-extrabold accent-text mb-1">92%</p>
-                        <p class="text-sm uppercase tracking-wider text-gray-400">Win Rate (2025)</p>
-                    </div>
-                    <div>
-                        <p class="text-5xl font-extrabold accent-text mb-1">10k</p>
-                        <p class="text-sm uppercase tracking-wider text-gray-400">Peak Viewers</p>
-                    </div>
+                    <div class="sm:border-r border-red-900/50 pr-4"><p class="text-5xl font-extrabold accent-text mb-1">5</p><p class="text-sm uppercase tracking-wider text-gray-400">Major Titles</p></div>
+                    <div class="sm:border-r border-red-900/50 pr-4"><p class="text-5xl font-extrabold accent-text mb-1">92%</p><p class="text-sm uppercase tracking-wider text-gray-400">Win Rate (2025)</p></div>
+                    <div><p class="text-5xl font-extrabold accent-text mb-1">10k</p><p class="text-sm uppercase tracking-wider text-gray-400">Peak Viewers</p></div>
                 </div>
             </div>
         </section>
@@ -253,7 +228,7 @@
                     </ul>
                 </div>
                 <div class="order-1 lg:order-2" data-aos="fade-left">
-                    <img src="https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fs1.narvii.com%2Fimage%2Fj44ysgwzwlxwqmx4wd4pu3o6xdfsk7al_hq.jpg&f=1&nofb=1&ipt=384825d7f9f448e260697dd96e764eb187dce8d047933033e7ee6ed03d488228" alt="Syrix Team posing together" class="w-full rounded-xl shadow-2xl border border-red-700/50 object-cover h-full max-h-96 lg:max-h-full" loading="lazy">
+                    <img src="https://placehold.co/800x600/222/ff3333?text=Team+Photo" alt="Syrix Team posing together" class="w-full rounded-xl shadow-2xl border border-red-700/50 object-cover h-full max-h-96 lg:max-h-full" loading="lazy">
                 </div>
             </div>
         </section>
@@ -261,19 +236,17 @@
         <section id="roster" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
             <div class="text-center mb-12" data-aos="fade-up"><h3 class="text-3xl md:text-4xl font-bold mb-2">The <span class="accent-text">Active Roster</span> (5)</h3><p class="text-gray-400">The primary line-up for competition.</p></div>
             <div id="active-roster-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 mb-16"><p class="text-center text-gray-500 lg:col-span-5">Loading roster...</p></div>
+
             <div class="text-center mb-12 mt-16" data-aos="fade-up"><h3 class="text-3xl md:text-4xl font-bold mb-2">Substitute <span class="accent-text">Players</span> (2)</h3><p class="text-gray-400">The versatile players ready to step in when needed.</p></div>
             <div id="sub-roster-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-8 max-w-4xl mx-auto mb-16"><p class="text-center text-gray-500 lg:col-span-2">Loading substitutes...</p></div>
+
             <div class="text-center mb-12 mt-16" data-aos="fade-up"><h3 class="text-3xl md:text-4xl font-bold mb-2">Coaching & <span class="accent-text">Management</span> (2)</h3><p class="text-gray-400">The staff guiding our strategy and operations.</p></div>
             <div id="management-roster-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-8 max-w-4xl mx-auto"><p class="text-center text-gray-500 lg:col-span-2">Loading management...</p></div>
         </section>
 
         <section id="schedule" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-            <div class="text-center mb-12" data-aos="fade-up">
-                <h3 class="text-3xl md:text-4xl font-bold mb-2">Upcoming <span class="accent-text">Schedule</span></h3>
-                <p class="text-gray-400">Mark your calendars for the next battles.</p>
-            </div>
-            <div class="bg-gray-900/70 rounded-xl p-6 shadow-xl space-y-4" data-aos="fade-up">
-            </div>
+            <div class="text-center mb-12" data-aos="fade-up"><h3 class="text-3xl md:text-4xl font-bold mb-2">Upcoming <span class="accent-text">Schedule</span></h3><p class="text-gray-400">Mark your calendars for the next battles.</p></div>
+            <div id="schedule-list" class="bg-gray-900/70 rounded-xl p-6 shadow-xl space-y-4" data-aos="fade-up"></div>
             <div class="text-center mt-8" data-aos="fade-up" data-aos-delay="200">
                 <p class="text-gray-400 uppercase tracking-wider text-sm">Next match starts in:</p>
                 <p id="countdown-timer" class="text-4xl font-extrabold accent-text mt-2">Calculating...</p>
@@ -281,23 +254,11 @@
         </section>
 
         <section id="vods" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-            <div class="text-center mb-12" data-aos="fade-up">
-                <h3 class="text-3xl md:text-4xl font-bold mb-2">Highlights & <span class="accent-text">VODS</span></h3>
-                <p class="text-gray-400">Relive the best moments and crucial matches.</p>
-            </div>
+            <div class="text-center mb-12" data-aos="fade-up"><h3 class="text-3xl md:text-4xl font-bold mb-2">Highlights & <span class="accent-text">VODS</span></h3><p class="text-gray-400">Relive the best moments and crucial matches.</p></div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="vod-card bg-gray-800 rounded-xl overflow-hidden shadow-xl transform transition duration-300 hover:scale-[1.02] cursor-pointer" data-aos="fade-up" data-video-id="dQw4w9WgXcQ">
-                    <div class="aspect-video bg-black flex items-center justify-center"><img src="https://placehold.co/600x400/3a3a3a/fff?text=VOD+HIGHLIGHTS+1" alt="Championship Finals VOD Thumbnail" class="w-full h-full object-cover opacity-70" loading="lazy"></div>
-                    <div class="p-4"><p class="text-sm font-bold accent-text">CHAMPIONSHIP FINALS</p><p class="text-xs text-gray-400">The 5-game thriller that secured the title.</p></div>
-                </div>
-                <div class="vod-card bg-gray-800 rounded-xl overflow-hidden shadow-xl transform transition duration-300 hover:scale-[1.02] cursor-pointer" data-aos="fade-up" data-aos-delay="100" data-video-id="dQw4w9WgXcQ">
-                    <div class="aspect-video bg-black flex items-center justify-center"><img src="https://placehold.co/600x400/3a3a3a/fff?text=VOD+BLITZ+MOMENTS" alt="Blitz's Top Plays VOD Thumbnail" class="w-full h-full object-cover opacity-70" loading="lazy"></div>
-                    <div class="p-4"><p class="text-sm font-bold accent-text">BLITZ'S TOP 10 PLAYS</p><p class="text-xs text-gray-400">A compilation of our Entry Fragger's best moves.</p></div>
-                </div>
-                <div class="vod-card bg-gray-800 rounded-xl overflow-hidden shadow-xl transform transition duration-300 hover:scale-[1.02] cursor-pointer" data-aos="fade-up" data-aos-delay="200" data-video-id="dQw4w9WgXcQ">
-                    <div class="aspect-video bg-black flex items-center justify-center"><img src="https://placehold.co/600x400/3a3a3a/fff?text=VOD+INTERVIEW+V+SPECTRE" alt="Post-match interview VOD Thumbnail" class="w-full h-full object-cover opacity-70" loading="lazy"></div>
-                    <div class="p-4"><p class="text-sm font-bold accent-text">POST-MATCH INTERVIEW</p><p class="text-xs text-gray-400">Viper and Spectre discuss the strategy behind the win.</p></div>
-                </div>
+                <div class="vod-card bg-gray-800 rounded-xl overflow-hidden shadow-xl transform transition duration-300 hover:scale-[1.02] cursor-pointer" data-aos="fade-up" data-video-id="dQw4w9WgXcQ"><div class="aspect-video bg-black flex items-center justify-center"><img src="https://placehold.co/600x400/3a3a3a/fff?text=VOD+HIGHLIGHTS+1" alt="Championship Finals VOD Thumbnail" class="w-full h-full object-cover opacity-70" loading="lazy"></div><div class="p-4"><p class="text-sm font-bold accent-text">CHAMPIONSHIP FINALS</p><p class="text-xs text-gray-400">The 5-game thriller that secured the title.</p></div></div>
+                <div class="vod-card bg-gray-800 rounded-xl overflow-hidden shadow-xl transform transition duration-300 hover:scale-[1.02] cursor-pointer" data-aos="fade-up" data-aos-delay="100" data-video-id="dQw4w9WgXcQ"><div class="aspect-video bg-black flex items-center justify-center"><img src="https://placehold.co/600x400/3a3a3a/fff?text=VOD+BLITZ+MOMENTS" alt="Blitz's Top Plays VOD Thumbnail" class="w-full h-full object-cover opacity-70" loading="lazy"></div><div class="p-4"><p class="text-sm font-bold accent-text">BLITZ'S TOP 10 PLAYS</p><p class="text-xs text-gray-400">A compilation of our Entry Fragger's best moves.</p></div></div>
+                <div class="vod-card bg-gray-800 rounded-xl overflow-hidden shadow-xl transform transition duration-300 hover:scale-[1.02] cursor-pointer" data-aos="fade-up" data-aos-delay="200" data-video-id="dQw4w9WgXcQ"><div class="aspect-video bg-black flex items-center justify-center"><img src="https://placehold.co/600x400/3a3a3a/fff?text=VOD+INTERVIEW+V+SPECTRE" alt="Post-match interview VOD Thumbnail" class="w-full h-full object-cover opacity-70" loading="lazy"></div><div class="p-4"><p class="text-sm font-bold accent-text">POST-MATCH INTERVIEW</p><p class="text-xs text-gray-400">Viper and Spectre discuss the strategy behind the win.</p></div></div>
             </div>
             <div class="text-center mt-10" data-aos="fade-up"><a href="#" class="inline-block px-8 py-3 rounded-full bg-gray-700 font-bold transition duration-300 hover:bg-gray-600">VIEW ALL CONTENT</a></div>
         </section>
@@ -305,16 +266,8 @@
         <section id="news" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
             <div class="text-center mb-12" data-aos="fade-up"><h3 class="text-3xl md:text-4xl font-bold mb-2">Syrix <span class="accent-text">News & Updates</span></h3><p class="text-gray-400">All the latest announcements and event details.</p></div>
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <div class="lg:col-span-2 bg-gray-800 p-8 rounded-xl shadow-2xl border border-red-700/50" data-aos="fade-right">
-                    <p class="text-xs uppercase font-semibold accent-text mb-2">Featured Announcement</p><h4 class="text-2xl md:text-3xl font-extrabold mb-4">SYRIX SECURES CHAMPIONSHIP SPOT!</h4>
-                    <p class="text-gray-400 mb-6">Our team demonstrated flawless execution this past weekend, sweeping the semi-finals to secure our spot in the Grand Championship next month. The team is now entering an intensive training regime to prepare for the final showdown. Support the squad!</p>
-                    <a href="#" class="px-6 py-2 rounded-full accent-bg font-bold transform transition duration-300 hover:scale-105 inline-block">READ MATCH RECAP</a>
-                </div>
-                <div id="news-feed" class="lg:col-span-1 space-y-4" data-aos="fade-left">
-                    <div class="bg-gray-800 p-4 rounded-lg border-l-4 border-red-500 shadow-md"><p class="text-sm font-semibold mb-1">Patch Notes 3.0 Released</p><p class="text-xs text-gray-400">The new game update brings significant changes to the map rotation. Our analyst team is already preparing VOD reviews.</p><span class="text-xs text-gray-600 mt-2 block">— General News | 2 days ago</span></div>
-                    <div class="bg-gray-800 p-4 rounded-lg border-l-4 border-red-500 shadow-md"><p class="text-sm font-semibold mb-1">Player Spectre Interview Live!</p><p class="text-xs text-gray-400">Spectre sat down with 'Game Daily' to discuss meta strategy and his favorite agents. Link in our social media bio!</p><span class="text-xs text-gray-600 mt-2 block">— Media Team | 5 days ago</span></div>
-                    <div class="bg-gray-800 p-4 rounded-lg border-l-4 border-red-500 shadow-md"><p class="text-sm font-semibold mb-1">New Syrix Merchandise Drop</p><p class="text-xs text-gray-400">Limited edition championship jerseys are now available in the store. Grab yours before they sell out!</p><span class="text-xs text-gray-600 mt-2 block">— Merch Team | 1 week ago</span></div>
-                </div>
+                <div class="lg:col-span-2 bg-gray-800 p-8 rounded-xl shadow-2xl border border-red-700/50" data-aos="fade-right"><p class="text-xs uppercase font-semibold accent-text mb-2">Featured Announcement</p><h4 class="text-2xl md:text-3xl font-extrabold mb-4">SYRIX SECURES CHAMPIONSHIP SPOT!</h4><p class="text-gray-400 mb-6">Our team demonstrated flawless execution this past weekend, sweeping the semi-finals to secure our spot in the Grand Championship next month. The team is now entering an intensive training regime to prepare for the final showdown. Support the squad!</p><a href="#" class="px-6 py-2 rounded-full accent-bg font-bold transform transition duration-300 hover:scale-105 inline-block">READ MATCH RECAP</a></div>
+                <div id="news-feed" class="lg:col-span-1 space-y-4" data-aos="fade-left"><div class="bg-gray-800 p-4 rounded-lg border-l-4 border-red-500 shadow-md"><p class="text-sm font-semibold mb-1">Patch Notes 3.0 Released</p><p class="text-xs text-gray-400">The new game update brings significant changes to the map rotation. Our analyst team is already preparing VOD reviews.</p><span class="text-xs text-gray-600 mt-2 block">— General News | 2 days ago</span></div><div class="bg-gray-800 p-4 rounded-lg border-l-4 border-red-500 shadow-md"><p class="text-sm font-semibold mb-1">Player Spectre Interview Live!</p><p class="text-xs text-gray-400">Spectre sat down with 'Game Daily' to discuss meta strategy and his favorite agents. Link in our social media bio!</p><span class="text-xs text-gray-600 mt-2 block">— Media Team | 5 days ago</span></div><div class="bg-gray-800 p-4 rounded-lg border-l-4 border-red-500 shadow-md"><p class="text-sm font-semibold mb-1">New Syrix Merchandise Drop</p><p class="text-xs text-gray-400">Limited edition championship jerseys are now available in the store. Grab yours before they sell out!</p><span class="text-xs text-gray-600 mt-2 block">— Merch Team | 1 week ago</span></div></div>
             </div>
         </section>
 
@@ -329,11 +282,7 @@
         </section>
 
         <section id="signup" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-            <div class="bg-gray-900 rounded-xl p-8 md:p-12 text-center shadow-2xl border-2 border-red-700/60" data-aos="zoom-in">
-                <h3 class="text-3xl md:text-5xl font-extrabold mb-4">Join the <span class="accent-text">Syrix</span> Inner Circle</h3>
-                <p class="text-gray-400 mb-8 max-w-2xl mx-auto">Get exclusive news, early merch drops, and direct insights from the players.</p>
-                <form class="max-w-xl mx-auto flex flex-col sm:flex-row gap-4"><input type="email" placeholder="Enter your email address" class="flex-grow p-4 rounded-full bg-gray-800 border border-gray-700 text-white placeholder-gray-500 focus:ring-2 focus:ring-red-500 focus:border-red-500" required><button type="submit" class="px-8 py-3 rounded-full accent-bg font-bold shadow-xl transform transition duration-300 hover:scale-[1.05] hover:shadow-red-500/50">SIGN UP NOW</button></form>
-            </div>
+            <div class="bg-gray-900 rounded-xl p-8 md:p-12 text-center shadow-2xl border-2 border-red-700/60" data-aos="zoom-in"><h3 class="text-3xl md:text-5xl font-extrabold mb-4">Join the <span class="accent-text">Syrix</span> Inner Circle</h3><p class="text-gray-400 mb-8 max-w-2xl mx-auto">Get exclusive news, early merch drops, and direct insights from the players.</p><form class="max-w-xl mx-auto flex flex-col sm:flex-row gap-4"><input type="email" placeholder="Enter your email address" class="flex-grow p-4 rounded-full bg-gray-800 border border-gray-700 text-white placeholder-gray-500 focus:ring-2 focus:ring-red-500 focus:border-red-500" required><button type="submit" class="px-8 py-3 rounded-full accent-bg font-bold shadow-xl transform transition duration-300 hover:scale-[1.05] hover:shadow-red-500/50">SIGN UP NOW</button></form></div>
         </section>
 
         <section id="partners" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 bg-gray-900/50 rounded-xl shadow-inner mb-16" data-aos="fade-up">
@@ -376,84 +325,46 @@
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
     <script>
-        // --- 1. Team Data Structure (EDIT THIS TO UPDATE ROSTER) ---
         const teamData = {
             active: [
-                { name: "Aries", discordTag: "Aries", role: "Sentinal", desc: "The mastermind behind every strategy and decisive moment.", pfpUrl: "https://placehold.co/400x300/333/fff?text=ARIES" },
-                { name: "Cat", discordTag: "Cat", role: "Controller", desc: "Unmatched aggression and precision on the front lines.", pfpUrl: "https://placehold.co/400x300/333/fff?text=CAT" },
-                { name: "Nicky", discordTag: "Nicky", role: "Iniciator", desc: "The adaptive player, ensuring team utility and balance.", pfpUrl: "https://placehold.co/400x300/333/fff?text=NICKY" },
-                { name: "Tawz", discordTag: "Tawz", role: "Duelist", desc: "Deadly accuracy and the primary source of damage output.", pfpUrl: "https://placehold.co/400x300/333/fff?text=TAWZ" },
-                { name: "Nemuxhin", discordTag: "Nemuxhin", role: "Flex Player", desc: "Versatile player capable of adapting to any team composition.", pfpUrl: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.pinimg.com%2F736x%2Fb9%2Fdb%2Fb3%2Fb9dbb3de029994cc135d13935290d000.jpg&f=1&nofb=1&ipt=107844a6e7198fc0c62c7646539b080c2e56f10f146e3e871b32962893a082ff" },
+                { name: "Aries", role: "Sentinal", desc: "The mastermind behind every strategy and decisive moment.", pfpUrl: "https://placehold.co/400x300/333/fff?text=ARIES" },
+                { name: "Cat", role: "Controller", desc: "Unmatched aggression and precision on the front lines.", pfpUrl: "https://placehold.co/400x300/333/fff?text=CAT" },
+                { name: "Nicky", role: "Iniciator", desc: "The adaptive player, ensuring team utility and balance.", pfpUrl: "https://placehold.co/400x300/333/fff?text=NICKY" },
+                { name: "Tawz", role: "Duelist", desc: "Deadly accuracy and the primary source of damage output.", pfpUrl: "https://placehold.co/400x300/333/fff?text=TAWZ" },
+                { name: "Nemuxhin", role: "Flex Player", desc: "Versatile player capable of adapting to any team composition.", pfpUrl: "https://placehold.co/400x300/333/fff?text=NEMUXHIN" },
             ],
             substitutes: [
-                { name: "Jinx", discordTag: "jinx_sub", role: "Substitute / Duelist", desc: "High skill ceiling and deep map knowledge.", pfpUrl: "https://placehold.co/400x300/333/999?text=JINX" },
-                { name: "Ghost", discordTag: "ghost_syrix", role: "Substitute / Support", desc: "Excels at utility usage and strategic vision.", pfpUrl: "https://placehold.co/400x300/333/999?text=GHOST" },
+                { name: "Jinx", role: "Substitute / Duelist", desc: "High skill ceiling and deep map knowledge.", pfpUrl: "https://placehold.co/400x300/333/999?text=JINX" },
+                { name: "Ghost", role: "Substitute / Support", desc: "Excels at utility usage and strategic vision.", pfpUrl: "https://placehold.co/400x300/333/999?text=GHOST" },
             ],
             management: [
-                { name: "Zeta", discordTag: "zeta_coach", role: "Head Coach", desc: "Former pro player and tactical genius.", pfpUrl: "https://placehold.co/400x300/444/ddd?text=COACH+ZETA" },
-                { name: "Nemuxhin", discordTag: "Nemuxhin", role: "Team Manager", desc: "Handles logistics, scheduling, and media relations.", pfpUrl: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.pinimg.com%2F736x%2Fb9%2Fdb%2Fb3%2Fb9dbb3de029994cc135d13935290d000.jpg&f=1&nofb=1&ipt=107844a6e7198fc0c62c7646539b080c2e56f10f146e3e871b32962893a082ff" },
+                { name: "Zeta", role: "Head Coach", desc: "Former pro player and tactical genius.", pfpUrl: "https://placehold.co/400x300/444/ddd?text=COACH+ZETA" },
+                { name: "Nemuxhin", role: "Team Manager", desc: "Handles logistics, scheduling, and media relations.", pfpUrl: "https://placehold.co/400x300/444/ddd?text=MANAGER+NEMUXHIN" },
             ]
         };
 
-        // NEW: Schedule Data
         const scheduleData = [
-            { opponent: "Team Nova", event: "Challengers League Finals", date: "Aug 20, 2025 18:00:00" },
-            { opponent: "Ascend Gaming", event: "Group Stage | World Cup", date: "Aug 25, 2025 15:30:00" },
-            { opponent: "Blackout Squad", event: "Regional Qualifier", date: "Sep 01, 2025 20:00:00" },
+            { opponent: "Team Nova", event: "Challengers League Finals", date: "Nov 20, 2025 18:00:00" },
+            { opponent: "Ascend Gaming", event: "Group Stage | World Cup", date: "Nov 25, 2025 15:30:00" },
+            { opponent: "Blackout Squad", event: "Regional Qualifier", date: "Dec 01, 2025 20:00:00" },
         ];
 
-
-        // --- 2. Roster Rendering Function ---
-        // NEW: Updated to create an interactive flip card
         const createPlayerCard = (player, isManagement, delay) => {
             const borderClass = isManagement ? "border-gray-500" : "border-red-700";
             const textColorClass = isManagement ? "text-white" : "accent-text";
-
-            return `
-                    <div class="player-card" data-aos="fade-up" data-aos-delay="${delay}">
-                        <div class="card-inner">
-                            <div class="card-front bg-gray-800 rounded-xl overflow-hidden shadow-2xl border-b-4 ${borderClass}">
-                                 <img src="${player.pfpUrl}" alt="${player.name}'s Profile Picture" class="w-full h-48 object-cover" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/400x300/333/fff?text=PFP';">
-                                 <div class="p-6 text-center">
-                                     <h4 class="text-2xl font-extrabold ${textColorClass} mb-1">${player.name}</h4>
-                                     <p class="text-sm font-semibold text-gray-400 mb-1">${player.role}</p>
-                                     <img src="https://placehold.co/100x20/444/ff3333?text=STATUS+IMG" alt="Player status image" class="mx-auto mt-3 rounded-full" />
-                                 </div>
-                            </div>
-                            <div class="card-back">
-                                <div>
-                                    <h5 class="text-xl font-bold accent-text">${player.name}</h5>
-                                    <p class="text-gray-300 mt-2">${player.desc}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                `;
+            return `<div class="player-card" data-aos="fade-up" data-aos-delay="${delay}"><div class="card-inner"><div class="card-front bg-gray-800 rounded-xl overflow-hidden shadow-2xl border-b-4 ${borderClass}"><img src="${player.pfpUrl}" alt="${player.name}'s Profile Picture" class="w-full h-48 object-cover" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/400x300/333/fff?text=IMAGE+ERROR';"><div class="p-6 text-center"><h4 class="text-2xl font-extrabold ${textColorClass} mb-1">${player.name}</h4><p class="text-sm font-semibold text-gray-400 mb-1">${player.role}</p><img src="https://placehold.co/100x20/444/ff3333?text=STATUS+IMG" alt="Player status image" class="mx-auto mt-3 rounded-full" /></div></div><div class="card-back"><div><h5 class="text-xl font-bold accent-text">${player.name}</h5><p class="text-gray-300 mt-2">${player.desc}</p></div></div></div></div>`;
         };
 
         const renderRoster = (data, containerId, isManagement = false) => {
             const container = document.getElementById(containerId);
-            if (!container) return;
-            container.innerHTML = ''; // Clear loading text
-            if (data.length === 0) {
-                container.innerHTML = `<p class="text-center text-gray-500 lg:col-span-5">No members listed.</p>`;
-                return;
-            }
-            data.forEach((player, index) => {
-                container.innerHTML += createPlayerCard(player, isManagement, index * 100);
-            });
+            if (!container) { console.error(`Error: Could not find container with ID: ${containerId}`); return; }
+            container.innerHTML = '';
+            data.forEach((player, index) => container.innerHTML += createPlayerCard(player, isManagement, index * 100));
         };
 
-        // --- 3. Initialization and Event Listeners ---
         document.addEventListener('DOMContentLoaded', () => {
-            // Initialize AOS
-            AOS.init({
-                duration: 800,
-                once: true,
-                offset: 50,
-            });
+            AOS.init({ duration: 800, once: true, offset: 50 });
 
-            // Mobile Menu Toggle Logic
             const menuToggle = document.getElementById('menu-toggle');
             const mobileMenu = document.getElementById('mobile-menu');
             const menuIcon = document.getElementById('menu-icon');
@@ -464,83 +375,51 @@
                 mobileMenu.classList.toggle('-translate-x-full');
                 menuIcon.innerHTML = isClosed ? '&#10005;' : '&#9776;';
             };
-
             menuToggle.addEventListener('click', toggleMenu);
-            menuItems.forEach(item => {
-                item.addEventListener('click', () => {
-                    if (!mobileMenu.classList.contains('-translate-x-full')) {
-                        toggleMenu();
-                    }
-                });
-            });
+            menuItems.forEach(item => item.addEventListener('click', () => { if (!mobileMenu.classList.contains('-translate-x-full')) toggleMenu(); }));
 
-            // Render the Roster
             renderRoster(teamData.active, 'active-roster-container');
             renderRoster(teamData.substitutes, 'sub-roster-container');
             renderRoster(teamData.management, 'management-roster-container', true);
 
-
-            // --- NEW: Dynamic Live Status ---
             const liveBanner = document.getElementById('live-status-banner');
-            const isTeamLive = true; // SIMULATION: Change to false to hide.
+            if (true) { liveBanner.classList.remove('hidden'); } // Simulating team is live
 
-            if (isTeamLive) {
-                liveBanner.classList.remove('hidden');
-            }
-            // In a real app, you would replace the above with a Twitch API call.
-            // Example: checkTwitchStatus('syrix_gaming').then(isLive => if(isLive) ... )
+            const scheduleList = document.getElementById('schedule-list');
+            scheduleData.forEach(match => {
+                const date = new Date(match.date);
+                const dateString = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+                const timeString = date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+                scheduleList.innerHTML += `<div class="flex items-center justify-between p-4 bg-gray-800 rounded-lg border-l-4 border-red-500 transition duration-300 hover:bg-red-900/40 hover:border-red-300 cursor-pointer"><div class="flex items-center space-x-4"><span class="text-lg font-bold text-gray-200">SYRIX</span><span class="text-sm text-gray-500">vs</span><span class="text-lg font-bold accent-text">${match.opponent}</span></div><div class="text-right"><p class="text-sm font-semibold text-white">${dateString} | ${timeString}</p><p class="text-xs text-gray-400">${match.event}</p></div></div>`;
+            });
 
-
-            // --- NEW: Countdown Timer Logic ---
             const countdownElement = document.getElementById('countdown-timer');
-            const nextMatchDate = new Date(scheduleData[0].date).getTime();
+            if (countdownElement && scheduleData.length > 0) {
+                const nextMatchDate = new Date(scheduleData[0].date).getTime();
+                const countdownInterval = setInterval(() => {
+                    const now = new Date().getTime();
+                    const distance = nextMatchDate - now;
+                    if (distance < 0) { clearInterval(countdownInterval); countdownElement.innerHTML = "MATCH IN PROGRESS"; return; }
+                    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                    countdownElement.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+                }, 1000);
+            }
 
-            const countdownInterval = setInterval(() => {
-                const now = new Date().getTime();
-                const distance = nextMatchDate - now;
-
-                if (distance < 0) {
-                    clearInterval(countdownInterval);
-                    countdownElement.innerHTML = "MATCH IN PROGRESS";
-                    return;
-                }
-
-                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-                countdownElement.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
-            }, 1000);
-
-
-            // --- NEW: VOD Modal (Lightbox) Logic ---
             const modal = document.getElementById('vod-modal');
             const closeBtn = document.getElementById('modal-close-btn');
             const videoContainer = document.getElementById('video-container');
             const vodCards = document.querySelectorAll('.vod-card');
 
-            vodCards.forEach(card => {
-                card.addEventListener('click', () => {
-                    const videoId = card.getAttribute('data-video-id');
-                    if (videoId) {
-                        videoContainer.innerHTML = `<iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
-                        modal.classList.add('active');
-                    }
-                });
-            });
-
-            const closeModal = () => {
-                modal.classList.remove('active');
-                videoContainer.innerHTML = ''; // Stop the video
-            };
-
+            const closeModal = () => { modal.classList.remove('active'); videoContainer.innerHTML = ''; };
+            vodCards.forEach(card => card.addEventListener('click', () => {
+                const videoId = card.getAttribute('data-video-id');
+                if (videoId) { videoContainer.innerHTML = `<iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`; modal.classList.add('active'); }
+            }));
             closeBtn.addEventListener('click', closeModal);
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) {
-                    closeModal();
-                }
-            });
+            modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
         });
     </script>
 </body>
