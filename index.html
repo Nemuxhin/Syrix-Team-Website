@@ -7,6 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <script src="https://embed.twitch.tv/embed/v1.js"></script>
     <style>
         :root {
             --primary-red: #ff3333;
@@ -27,7 +28,7 @@
 
         .accent-bg {
             background-color: var(--primary-red);
-            transition: background-color 0.3s;
+            transition: background-color: 0.3s;
         }
 
             .accent-bg:hover {
@@ -79,10 +80,9 @@
             animation: pulse-red 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
         }
 
-        /* Interactive Flip Card CSS */
         .player-card {
             perspective: 1000px;
-            min-height: 320px; /* THE FIX: Gives the card container a height */
+            min-height: 320px;
         }
 
         .card-inner {
@@ -118,7 +118,6 @@
             text-align: center;
         }
 
-        /* VOD Modal (Lightbox) CSS */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -164,7 +163,6 @@
     </style>
 </head>
 <body>
-
     <header class="sticky top-0 z-50 bg-black/90 shadow-lg border-b border-red-900/50">
         <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
             <a href="#home" class="flex items-center space-x-2"><span class="text-3xl font-extrabold accent-text">S</span><h1 class="text-xl font-extrabold uppercase tracking-widest">Syrix</h1></a>
@@ -202,7 +200,7 @@
                 </div>
                 <p class="text-sm md:text-md uppercase tracking-widest mb-4 accent-text font-bold">The Future of Competition</p>
                 <h2 class="text-4xl md:text-6xl font-extrabold leading-tight mb-6">Dominate the Field. <span class="accent-text block md:inline">Unite as Syrix.</span></h2>
-                <p class="text-gray-300 max-w-2xl mx-auto text-lg mb-8">Welcome to the official portal for Syrix. We push the limits of performance in every arena, driven by innovation and relentless passion.</p>
+                <p class="text-gray-300 max-w-2xl mx-auto text-lg mb-8">Welcome to the official Team Webpage for Syrix. We push the limits of performance in every arena, driven by innovation and relentless passion.</p>
                 <a href="#roster" class="inline-block px-10 py-3 rounded-full accent-bg font-bold shadow-xl transform transition duration-300 hover:scale-105 hover:shadow-2xl">MEET THE TEAM</a>
             </div>
         </section>
@@ -215,6 +213,14 @@
                     <div><p class="text-5xl font-extrabold accent-text mb-1">10k</p><p class="text-sm uppercase tracking-wider text-gray-400">Peak Viewers</p></div>
                 </div>
             </div>
+        </section>
+
+        <section id="twitch-stream-section" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 hidden">
+            <div class="text-center mb-12" data-aos="fade-up">
+                <h3 class="text-3xl md:text-4xl font-bold mb-2">We Are <span class="accent-text">Live!</span></h3>
+                <p class="text-gray-400">Watch the action unfold right here.</p>
+            </div>
+            <div id="twitch-embed" class="aspect-video" data-aos="fade-up"></div>
         </section>
 
         <section id="about" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
@@ -328,19 +334,19 @@
     <script>
         const teamData = {
             active: [
-                { name: "Aries", role: "Sentinal", desc: "The mastermind behind every strategy and decisive moment.", pfpUrl: "https://placehold.co/400x300/333/fff?text=ARIES" },
-                { name: "Cat", role: "Controller", desc: "Unmatched aggression and precision on the front lines.", pfpUrl: "https://placehold.co/400x300/333/fff?text=CAT" },
-                { name: "Nicky", role: "Iniciator", desc: "The adaptive player, ensuring team utility and balance.", pfpUrl: "https://placehold.co/400x300/333/fff?text=NICKY" },
-                { name: "Tawz", role: "Duelist", desc: "Deadly accuracy and the primary source of damage output.", pfpUrl: "https://cdn.discordapp.com/attachments/1350946619578912892/1428158101579759819/45a0cdcc9bbb40cd7dd2b253b2925c96.png?ex=68f22421&is=68f0d2a1&hm=e9a163fbc20a204074272e46cbeda5d4ff14cf6d86d8d4c197c51d7cfd0b7ad2&" },
-                { name: "Nemuxhin", role: "Flex Player", desc: "Versatile player capable of adapting to any team composition.", pfpUrl: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.pinimg.com%2F736x%2Fb9%2Fdb%2Fb3%2Fb9dbb3de029994cc135d13935290d000.jpg&f=1&nofb=1&ipt=dbb0ab20ff5055f4e048c502454aa2573a82c3d6c9f939f4f774c60099e27af1" },
+                { name: "Aries", role: "Sentinal", desc: "The immovable anchor of the team, turning vital territory into an impenetrable fortress.", pfpUrl: "https://placehold.co/400x300/333/fff?text=ARIES" },
+                { name: "Cat", role: "Controller", desc: "The battlefield architect who sculpts the map with shadow, dictating every line of sight.", pfpUrl: "https://placehold.co/400x300/333/fff?text=CAT" },
+                { name: "Nicky", role: "Initiator", desc: "The tactical playmaker who forces the engagement and sets the stage for a flawless assault.", pfpUrl: "https://placehold.co/400x300/333/fff?text=NICKY" },
+                { name: "Tawz", role: "Duelist", desc: "The tip of the spear, designed to shatter enemy defenses and create openings through pure aggression.", pfpUrl: "https://cdn.discordapp.com/attachments/1350946619578912892/1428158101579759819/45a0cdcc9bbb40cd7dd2b253b2925c96.png?ex=68f22421&is=68f0d2a1&hm=e9a163fbc20a204074272e46cbeda5d4ff14cf6d86d8d4c197c51d7cfd0b7ad2&" },
+                { name: "Nemuxhin", role: "Flex Player", desc: "The strategic wildcard who masters multiple roles to become the team's ultimate problem-solver.", pfpUrl: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.pinimg.com%2Foriginals%2F61%2F34%2F39%2F613439a1b6999cdfb32b39ba679e2af9.jpg&f=1&nofb=1&ipt=6a5a4412eb4f8e01e140d98327b794c7226d9c9b35305b2cfefc80467f7e8647" },
             ],
             substitutes: [
-                { name: "Jinx", role: "Substitute / Duelist", desc: "High skill ceiling and deep map knowledge.", pfpUrl: "https://placehold.co/400x300/333/999?text=JINX" },
-                { name: "Ghost", role: "Substitute / Support", desc: "Excels at utility usage and strategic vision.", pfpUrl: "https://placehold.co/400x300/333/999?text=GHOST" },
+                { name: "???", role: "Substitute", desc: "???", pfpUrl: "https://placehold.co/400x300/333/999?text=SUB" },
+                { name: "???", role: "Substitute", desc: "???", pfpUrl: "https://placehold.co/400x300/333/999?text=SUB" },
             ],
             management: [
-                { name: "Zeta", role: "Head Coach", desc: "Former pro player and tactical genius.", pfpUrl: "https://placehold.co/400x300/444/ddd?text=COACH+ZETA" },
-                { name: "Nemuxhin", role: "Team Manager", desc: "Handles logistics, scheduling, and media relations.", pfpUrl: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.pinimg.com%2F736x%2Fb9%2Fdb%2Fb3%2Fb9dbb3de029994cc135d13935290d000.jpg&f=1&nofb=1&ipt=dbb0ab20ff5055f4e048c502454aa2573a82c3d6c9f939f4f774c60099e27af1" },
+                { name: "Tawz", role: "Team Manager", desc: "Handles logistics, scheduling,as well as other team related matters", pfpUrl: "https://cdn.discordapp.com/attachments/1350946619578912892/1428158101579759819/45a0cdcc9bbb40cd7dd2b253b2925c96.png?ex=68f22421&is=68f0d2a1&hm=e9a163fbc20a204074272e46cbeda5d4ff14cf6d86d8d4c197c51d7cfd0b7ad2&" },
+                { name: "Nemuxhin", role: "Founder/Team Manager", desc: "Handles logistics, scheduling, and media relations.", pfpUrl: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.pinimg.com%2Foriginals%2F61%2F34%2F39%2F613439a1b6999cdfb32b39ba679e2af9.jpg&f=1&nofb=1&ipt=6a5a4412eb4f8e01e140d98327b794c7226d9c9b35305b2cfefc80467f7e8647" },
             ]
         };
 
@@ -383,8 +389,29 @@
             renderRoster(teamData.substitutes, 'sub-roster-container');
             renderRoster(teamData.management, 'management-roster-container', true);
 
-            const liveBanner = document.getElementById('live-status-banner');
-            if (true) { liveBanner.classList.remove('hidden'); } // Simulating team is live
+            // UPDATED: Live Status and Twitch Embed Logic
+            const isTeamLive = true; // SIMULATION: Change to true to show the stream
+            const twitchChannel = "syrix_syx"; // <-- IMPORTANT: CHANGE THIS to your team's Twitch username
+
+            if (isTeamLive) {
+                // Show the "LIVE" banner in the hero section
+                const liveBanner = document.getElementById('live-status-banner');
+                liveBanner.classList.remove('hidden');
+
+                // Show the Twitch stream section
+                const twitchSection = document.getElementById('twitch-stream-section');
+                twitchSection.classList.remove('hidden');
+
+                // Create the Twitch embed
+                new Twitch.Embed("twitch-embed", {
+                    width: "100%",
+                    height: "100%",
+                    channel: twitchChannel,
+                    layout: "video",
+                    theme: "dark",
+                    parent: ["https://www.twitch.tv/syrix_syx"] // IMPORTANT: Change this to your actual website domain when you go live
+                });
+            }
 
             const scheduleList = document.getElementById('schedule-list');
             scheduleData.forEach(match => {
